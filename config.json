@@ -1,0 +1,4 @@
+﻿{
+     "connectionString": "mongodb://printapp:printapp123@ds129321.mlab.com:29321/printappdb",
+      "secret": "123456ABCDEF"
+}
