@@ -1,6 +1,6 @@
 const expressJwt = require('express-jwt');
 const config = require('config.json');
-// const userService = require('../users/user.service');
+const projectService = require('../projects/project.service');
 // const productService = require('../products/product.service');
 // const categoryService = require('../categories/category.service');
 // const visitingCardOrderDetailsService = require('../orderdetails/visitingCardOrderDetails.service');

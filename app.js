@@ -49,7 +49,7 @@ app.use(cookieParser());
 
 // catch 404 and forward to error handler
 app.use(cors());
-// app.use('/users', require('./users/users.controller'));
+app.use('/projects', require('./projects/project.controller'));
 // app.use('/products', require('./products/product.controller'));
 // app.use('/categories', require('./categories/category.controller'));
 // app.use('/orderdetails', require('./orderdetails/visitingCardOrderDetails.controller'));
