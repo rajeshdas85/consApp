@@ -5,14 +5,17 @@ const db = require('../_helpers/db');
 const project = db.Project;
 const projectHistory = db.ProjectHistory;
 const projectEntry = db.ProjectEntry;
+const projectRecording = db.ProjectRecording;
 //https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34
 
 module.exports = {
     addProject,
     addProjectHistory,
     addProjectEntry,
+    addProjectRecording,
     updateProject,
-    updateProjectHistory
+    updateProjectHistory,
+    updateProjectRecording
 };
 async function addProject(projectParam) {
     const project = new Project(projectParam);
@@ -44,6 +47,16 @@ async function addProjectEntry(projectParam) {
             console.log(err);
         });
 }
+async function addProjectRecording(projectParam) {
+    const projectRecording = new ProjectRecording(projectParam);
+    await projectRecording.save()
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
 async function updateProject(param) {
     return await project.update({ _id: param.id }, 
             { 
@@ -58,6 +71,17 @@ async function updateProject(param) {
 }
 async function updateProjectHistory(param) {
     return await projectHistory.update({ PileNo: param.PileNo }, 
+            { 
+                $set: 
+                { 
+                 pillingRigDetails: param.pillingRigDetails,
+                 updateDate : Date.now
+                }
+            
+            }, { multi:true,new: true });
+}
+async function updateProjectRecording(param) {
+    return await projectRecording.update({ PileNo: param.PileNo }, 
             { 
                 $set: 
                 { 

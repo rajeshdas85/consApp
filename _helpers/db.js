@@ -10,7 +10,8 @@ mongoose.Promise = global.Promise;
 module.exports = {
     Project: require('../projects/project.model'),
     ProjectHistory: require('../projects/projectHistory.model'),
-    ProjectEntry: require('../projects/projectEntry.model')//,
+    ProjectEntry: require('../projects/projectEntry.model'),
+    ProjectRecording: require('../projects/projectRecording.model')//,
     // Product: require('../products/product.model'),
     // Category: require('../categories/category.model'),
     // VisitingCardOrderDetails : require('../orderdetails/visitingCardOrderDetails.model'),
