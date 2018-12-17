@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
+require('mongoose-double')(mongoose);
 const Schema = mongoose.Schema;
+//var mongoose = require('mongoose')
+const SchemaTypes = mongoose.Schema.Types;
 
 const schema = new Schema({
     ProjId: { type: String, required: true},

@@ -2,10 +2,10 @@ const config = require('config.json');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('../_helpers/db');
-const project = db.Project;
-const projectHistory = db.ProjectHistory;
-const projectEntry = db.ProjectEntry;
-const projectRecording = db.ProjectRecording;
+const Project = db.Project;
+const ProjectHistory = db.ProjectHistory;
+const ProjectEntry = db.ProjectEntry;
+const ProjectRecording = db.ProjectRecording;
 //https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34
 
 module.exports = {
@@ -18,6 +18,7 @@ module.exports = {
     updateProjectRecording
 };
 async function addProject(projectParam) {
+   // console.log(projectParam);
     const project = new Project(projectParam);
     await project.save()
         .then((data) => {
@@ -58,13 +59,15 @@ async function addProjectRecording(projectParam) {
         });
 }
 async function updateProject(param) {
-    return await project.update({ _id: param.id }, 
+    console.log(param);
+    return await Project.findOneAndUpdate({ _id: param.id }, 
             { 
                 $set: 
                 { 
                  PillingInfoByProjectID: param.PillingInfoByProjectID,
                  OtherInfoByProjectID:param.OtherInfoByProjectID,
-                 updateDate : Date.now
+                 projDesc:param.projDesc
+                // updateDate : Date.now
                 }
             
             }, { multi:true,new: true });
