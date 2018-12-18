@@ -15,10 +15,27 @@ module.exports = {
     addProjectRecording,
     updateProject,
     updateProjectHistory,
-    updateProjectRecording
+    updateProjectRecording,
+    getProjectDtlById,
+    getLastAddProduct,
+    getLastAddProjectEntry,
+    getProjectRecordingDtlByPilno
 };
+
+async function getProjectDtlById(id) {
+    return await Project.find({ "id": id }).sort({ $natural: -1 }).limit(1);
+}
+
+async function getProjectRecordingDtlByPilno(pileNo) {
+    return await ProjectRecording.find({ "pileNo": pileNo }).sort({ $natural: -1 }).limit(1);
+}
+async function getLastAddProduct() {
+    return await Project.find().sort({ $natural: -1 }).limit(1);
+}
+async function getLastAddProjectEntry() {
+    return await ProjectEntry.find().sort({ $natural: -1 }).limit(1);
+}
 async function addProject(projectParam) {
-   // console.log(projectParam);
     const project = new Project(projectParam);
     await project.save()
         .then((data) => {
@@ -58,39 +75,41 @@ async function addProjectRecording(projectParam) {
             console.log(err);
         });
 }
+
 async function updateProject(param) {
-    console.log(param);
-    return await Project.findOneAndUpdate({ _id: param.id }, 
-            { 
-                $set: 
-                { 
-                 PillingInfoByProjectID: param.PillingInfoByProjectID,
-                 OtherInfoByProjectID:param.OtherInfoByProjectID,
-                 projDesc:param.projDesc
-                // updateDate : Date.now
-                }
-            
-            }, { multi:true,new: true });
+    //console.log(param.updateDate);
+    // var nested = JSON.stringify(param.PillingInfoByProjectID);
+    //console.log(nested);
+    return await Project.findOneAndUpdate({ _id: param.id },
+        {
+            $set:
+            {
+                pillingInfoByProjectID: param.pillingInfoByProjectID,
+                otherInfoByProjectID: param.otherInfoByProjectID,
+                updateDate: param.updateDate
+            }
+
+        }, { multi: true, new: true });
 }
 async function updateProjectHistory(param) {
-    return await projectHistory.update({ PileNo: param.PileNo }, 
-            { 
-                $set: 
-                { 
-                 pillingRigDetails: param.pillingRigDetails,
-                 updateDate : Date.now
-                }
-            
-            }, { multi:true,new: true });
+    return await projectHistory.update({ PileNo: param.PileNo },
+        {
+            $set:
+            {
+                pillingRigDetails: param.pillingRigDetails,
+                updateDate: Date.now()
+            }
+
+        }, { multi: true, new: true });
 }
 async function updateProjectRecording(param) {
-    return await projectRecording.update({ PileNo: param.PileNo }, 
-            { 
-                $set: 
-                { 
-                 pillingRigDetails: param.pillingRigDetails,
-                 updateDate : Date.now
-                }
-            
-            }, { multi:true,new: true });
+    return await projectRecording.update({ PileNo: param.PileNo },
+        {
+            $set:
+            {
+                pillingRigDetails: param.pillingRigDetails,
+                updateDate: Date.now()
+            }
+
+        }, { multi: true, new: true });
 }

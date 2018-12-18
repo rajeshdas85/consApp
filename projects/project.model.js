@@ -9,7 +9,7 @@ const schema = new Schema({
     pillingInfoByProjectID: mongoose.Schema.Types.Mixed,
     otherInfoByProjectID: mongoose.Schema.Types.Mixed,
     createDate: { type: Date, default: Date.now },
-    updateDate: { type: Date, default: Date.now }
+    updateDate: { type: String, default:"Null" }
 });
 
 schema.set('toJSON', { virtuals: true });
