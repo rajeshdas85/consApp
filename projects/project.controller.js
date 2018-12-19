@@ -4,6 +4,7 @@ const projectService = require('./project.service');
 // routes
 router.get('/', getLastAddProduct);
 router.get('/getLastAddProjectEntry', getLastAddProjectEntry);
+router.get('/getAllProjectHistory', getAllProjectHistory);
 router.get('/getProjectDtlById', getProjectDtlById);
 router.get('/pileNo/:pileNo', getProjectRecordingDtlByPilno);
 //router.get('/:getLastAddProduct', getLastAddProduct);
@@ -38,6 +39,14 @@ function getProjectRecordingDtlByPilno(req, res, next) {
         .then(projects => res.json(projects))
         .catch(err => next(err));
 }
+    function getAllProjectHistory(req, res, next) {
+    projectService.getAllProjectHistory()
+        .then(projects => res.json(projects))
+        .catch(err => next(err));
+}
+
+
+
 function addProject(req, res, next) {
     projectService.addProject(req.body)
          .then(() => res.json({}))

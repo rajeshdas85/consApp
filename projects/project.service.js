@@ -19,7 +19,8 @@ module.exports = {
     getProjectDtlById,
     getLastAddProduct,
     getLastAddProjectEntry,
-    getProjectRecordingDtlByPilno
+    getProjectRecordingDtlByPilno,
+    getAllProjectHistory
 };
 
 async function getProjectDtlById(id) {
@@ -34,6 +35,10 @@ async function getLastAddProduct() {
 }
 async function getLastAddProjectEntry() {
     return await ProjectEntry.find().sort({ $natural: -1 }).limit(1);
+}
+
+async function getAllProjectHistory() {
+    return await ProjectHistory.find().sort({ $natural: 1 });
 }
 async function addProject(projectParam) {
     const project = new Project(projectParam);
@@ -92,12 +97,11 @@ async function updateProject(param) {
         }, { multi: true, new: true });
 }
 async function updateProjectHistory(param) {
-    return await projectHistory.update({ PileNo: param.PileNo },
+    return await ProjectHistory.update({ pileNo: param.pileNo },
         {
             $set:
             {
-                pillingRigDetails: param.pillingRigDetails,
-                updateDate: Date.now()
+                pillingRigDetails: param.pillingRigDetails
             }
 
         }, { multi: true, new: true });
