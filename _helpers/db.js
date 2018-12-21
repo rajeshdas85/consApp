@@ -11,7 +11,9 @@ module.exports = {
     Project: require('../projects/project.model'),
     ProjectHistory: require('../projects/projectHistory.model'),
     ProjectEntry: require('../projects/projectEntry.model'),
-    ProjectRecording: require('../projects/projectRecording.model')//,
+    ProjectRecording: require('../projects/projectRecording.model'),//,
+    ProjectManager: require('../projectmanger/projectManager.model')//,
+    
     // Product: require('../products/product.model'),
     // Category: require('../categories/category.model'),
     // VisitingCardOrderDetails : require('../orderdetails/visitingCardOrderDetails.model'),
