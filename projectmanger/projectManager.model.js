@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+require('mongoose-double')(mongoose);
 const Schema = mongoose.Schema;
+const SchemaTypes = mongoose.Schema.Types;
 const schema = new Schema({
     firstNmae: { type: String, default: "ProjectDec" },
     LastName: { type: String, default: "projManagerId" },
