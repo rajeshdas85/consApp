@@ -4,10 +4,13 @@ const Schema = mongoose.Schema;
 const SchemaTypes = mongoose.Schema.Types;
 
 const schema = new Schema({
-    projDesc: { type: String, default: "ProjectDec" },
-    projManagerId: { type: String, default: "projManagerId" },
+  
+   
 
     projName: { type: String, required: true },
+    projDesc: { type: String, default: "ProjectDec" },
+    projManagerId: { type: String, default: "projManagerId" },
+    
     projval: {type: SchemaTypes.Double, default: 0},
     commenceDate:{ type: Date, default: Date.now },
     completionDate:{ type: Date, default: Date.now },

@@ -31,7 +31,7 @@ async function getProjectRecordingDtlByPilno(pileNo) {
     return await ProjectRecording.find({ "pileNo": pileNo }).sort({ $natural: -1 }).limit(1);
 }
 async function getLastAddProduct() {
-    return await Project.find().sort({ $natural: -1 }).limit(1);
+    return await Project.find().sort({ $natural: -1 });
 }
 async function getLastAddProjectEntry() {
     return await ProjectEntry.find().sort({ $natural: -1 }).limit(1);

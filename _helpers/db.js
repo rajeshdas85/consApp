@@ -12,7 +12,7 @@ module.exports = {
     ProjectHistory: require('../projects/projectHistory.model'),
     ProjectEntry: require('../projects/projectEntry.model'),
     ProjectRecording: require('../projects/projectRecording.model'),//,
-    ProjectManager: require('../projectmanger/projectManager.model')//,
+    ProjectManager: require('../projectmanager/projectManager.model')//,
     
     // Product: require('../products/product.model'),
     // Category: require('../categories/category.model'),

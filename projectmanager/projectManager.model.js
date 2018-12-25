@@ -3,11 +3,12 @@ require('mongoose-double')(mongoose);
 const Schema = mongoose.Schema;
 const SchemaTypes = mongoose.Schema.Types;
 const schema = new Schema({
-    firstNmae: { type: String, default: "ProjectDec" },
-    LastName: { type: String, default: "projManagerId" },
-    contactNo: { type: String, required: true },
-    emailID: {type: SchemaTypes.Double, default: 0},
-    photo:{ type: Date, default: Date.now },
+    firstName: { type: String, default: "ProjectDec" },
+    lastName: { type: String, default: "projManagerId" },
+    //contactNo: { type: String, required: true },
+    email: {type:String, required: true },
+    password:{type:String, required: true },
+    photo:{type:String, required: true },
     idProof:{ type: String, default:"Adarcard" } , 
     createDate: { type: Date, default: Date.now }
 });
