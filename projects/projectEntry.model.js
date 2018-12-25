@@ -5,20 +5,28 @@ const SchemaTypes = mongoose.Schema.Types;
 const schema = new Schema({
     projId: { type: String, required: true},
     pileNo:{ type: String, default: "ProjectDec", unique:true},
-    description:{ type: String, required: true},
-    nameOfCompany:{ type: String, required: true},
-    pilingRigDetails:{ type: String, required: true},
+    description:{ type: String, default: "Details"},
+    nameOfCompany:{ type: String, default: "RKEC"},
+    pilingRigDetails:{ type: String, default: "RKEC Details"},
     casingToplevel:{type: SchemaTypes.Double, default: 0},
     existingToplevel:{type: SchemaTypes.Double, default: 0},
     pillingCutOfflevel:{type: SchemaTypes.Double, default: 0},
-    cagelengthrequired:{type: SchemaTypes.Double, default: 0},
-    boringStartTime: {  type: String},
-    cageloweringStartTime: {  type: String},
-    cageloweringEndTime: {  type: String},
-    noOfTrimePiecesRequired:{type:Number},
-    noOfTrimePiecesUsed:{type:Number},
-    nameOfSiteEngg:{ type: String, default: "Details" },
-    siteEnggId:{ type: String, default: "Details" },
+    cageLengthRequired:{type: SchemaTypes.Double, default: 0},
+   // boringStartTime: {  type: String, default: "00:00"},
+  //  boringStopTime: {  type: String, default: "00:00"},
+    cageloweringStartTime: {  type: String, default: "00:00"},
+    cageloweringEndTime: {  type: String, default: "00:00"},
+    concretePouringStartTime: {  type: String, default: "00:00"},
+    concretePouringEndTime: {  type: String, default: "00:00"},
+    noOfTrimePiecesRequired:{type:Number, default:0},
+    noOfTrimePiecesUsed:{type:Number, default:0},
+    nameOfSiteEngg:{ type: String, default: "Rajesh Das" },
+    siteEnggId:{ type: String, default: "5555" },
+    statusOfPilling:{type:Number, default:1},
+    // 1- inProgress Boaring,2-Completed Boaring
+    //3-Cage InProgress,4-Cage Completed
+    //5-ConcretePouring In Progress
+    //6-ConcretePouring Completed
     createDate:{ type: Date, default: Date.now }
 });
 

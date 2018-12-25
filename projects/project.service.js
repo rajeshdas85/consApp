@@ -18,25 +18,61 @@ module.exports = {
     updateProjectRecording,
     getProjectDtlById,
     getLastAddProduct,
-    getLastAddProjectEntry,
+    getLastAddedProjectEntry,
     getProjectRecordingDtlByPilno,
-    getAllProjectHistory
+    getAllProjectHistory,
+    getAllProjectEntryInProgress
 };
 
 async function getProjectDtlById(id) {
     return await Project.find({ "id": id }).sort({ $natural: -1 }).limit(1);
 }
 
-async function getProjectRecordingDtlByPilno(pileNo) {
-    return await ProjectRecording.find({ "pileNo": pileNo }).sort({ $natural: -1 }).limit(1);
-}
 async function getLastAddProduct() {
     return await Project.find().sort({ $natural: -1 });
 }
-async function getLastAddProjectEntry() {
+// Started
+//Last Enter record in Project Entry
+async function getLastAddedProjectEntry() {
     return await ProjectEntry.find().sort({ $natural: -1 }).limit(1);
 }
+// 1- inProgress Boaring,2-Completed Boaring
+//3-Cage InProgress,4-Cage Completed
+//5-ConcretePouring In Progress
+//6-ConcretePouring Completed
+async function getAllProjectEntryInProgress() {
+    return await ProjectEntry.find({ "statusOfPilling": { $ne: 6 } }).sort({ $natural: -1 });
+}
+//Project Entry
+async function addProjectEntry(projectParam) {
+    const projectEntry = new ProjectEntry(projectParam);
+    await projectEntry.save()
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+// Ended
 
+//Recoding started
+async function addProjectRecording(projectParam) {
+    const projectRecording = new ProjectRecording(projectParam);
+    await projectRecording.save()
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+
+async function getProjectRecordingDtlByPilno(pileNo) {
+    return await ProjectRecording.find({ "pileNo": pileNo }).sort({ $natural: -1 }).limit(1);
+}
+//Recoding Ended
 async function getAllProjectHistory() {
     return await ProjectHistory.find().sort({ $natural: 1 });
 }
@@ -60,26 +96,19 @@ async function addProjectHistory(projectParam) {
             console.log(err);
         });
 }
-async function addProjectEntry(projectParam) {
-    const projectEntry = new ProjectEntry(projectParam);
-    await projectEntry.save()
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-async function addProjectRecording(projectParam) {
-    const projectRecording = new ProjectRecording(projectParam);
-    await projectRecording.save()
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
+
+
+
+// async function addProjectRecording(projectParam) {
+//     const projectRecording = new ProjectRecording(projectParam);
+//     await projectRecording.save()
+//         .then((data) => {
+//             console.log(data);
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// }
 
 async function updateProject(param) {
     //console.log(param.updateDate);
