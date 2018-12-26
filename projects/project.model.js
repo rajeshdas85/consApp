@@ -18,7 +18,8 @@ const schema = new Schema({
     location:{ type: String, default: "Vizag" },
     
     projStartDate: { type: Date, default: Date.now },
-    pillingInfoByProjectID: mongoose.Schema.Types.Mixed,
+    pillingInfoByProjectID1: mongoose.Schema.Types.Mixed,
+    pillingInfoByProjectID2: mongoose.Schema.Types.Mixed,
     otherInfoByProjectID: mongoose.Schema.Types.Mixed,
     
     createDate: { type: Date, default: Date.now },

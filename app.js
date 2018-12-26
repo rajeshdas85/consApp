@@ -20,8 +20,8 @@ var session = require('express-session');
 var bodyParser   = require('body-parser');
 //var auth = require('./routes/auth');
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({limit: '500mb'}));
+app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
 
 app.use(session({
   secret: 'ilovescotchscotchyscotchscotch',

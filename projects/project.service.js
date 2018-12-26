@@ -12,6 +12,7 @@ module.exports = {
     addProject,
     addProjectHistory,
     addProjectEntry,
+    updateProjectEntry,
     addProjectRecording,
     updateProject,
     updateProjectHistory,
@@ -31,7 +32,8 @@ async function getProjectDtlById(id) {
 async function getLastAddProduct() {
     return await Project.find().sort({ $natural: -1 });
 }
-// Started
+// Started  ProjectEntry
+
 //Last Enter record in Project Entry
 async function getLastAddedProjectEntry() {
     return await ProjectEntry.find().sort({ $natural: -1 }).limit(1);
@@ -54,7 +56,18 @@ async function addProjectEntry(projectParam) {
             console.log(err);
         });
 }
-// Ended
+async function updateProjectEntry(param) {
+    return await projectEntry.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                cageloweringStartTime: param.cageloweringStartTime,
+                cageloweringEndTime: param.cageloweringEndTime,
+            }
+
+        }, { multi: true, new: true });
+}
+// Ended  ProjectEntry
 
 //Recoding started
 async function addProjectRecording(projectParam) {
@@ -72,11 +85,14 @@ async function addProjectRecording(projectParam) {
 async function getProjectRecordingDtlByPilno(pileNo) {
     return await ProjectRecording.find({ "pileNo": pileNo }).sort({ $natural: -1 }).limit(1);
 }
+
+
 //Recoding Ended
 async function getAllProjectHistory() {
     return await ProjectHistory.find().sort({ $natural: 1 });
 }
 async function addProject(projectParam) {
+    console.log(projectParam);
     const project = new Project(projectParam);
     await project.save()
         .then((data) => {
@@ -118,7 +134,8 @@ async function updateProject(param) {
         {
             $set:
             {
-                pillingInfoByProjectID: param.pillingInfoByProjectID,
+                pillingInfoByProjectID1: param.pillingInfoByProjectID1,
+                pillingInfoByProjectID2: param.pillingInfoByProjectID2,
                 otherInfoByProjectID: param.otherInfoByProjectID,
                 updateDate: param.updateDate
             }
