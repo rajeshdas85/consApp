@@ -6,7 +6,7 @@ const SchemaTypes = mongoose.Schema.Types;
 
 const schema = new Schema({
     projId: { type: String, required: true},
-    pileNo:{ type: String, default: "ProjectDec", required: true},
+    pileNo:{ type: String, default: "P1P1", required: true},
     startDate:{ type: Date, default: Date.now},
     fromTimeOfBoring:{ type: String, required: true},
     toTimeOfBoring:{ type: String, required: true},
@@ -18,7 +18,7 @@ const schema = new Schema({
     RLOfThePileTo:{type: SchemaTypes.Double, default: 0},
     remarks:{ type: String, default: "any"},
     siteEnggId:{ type: String, default: "Details" },
-    createDate:{ type: Date, default: Date.now }
+    updateDate:{ type: Date, default: Date.now }
 });
 
 schema.set('toJSON', { virtuals: true });

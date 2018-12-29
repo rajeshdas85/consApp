@@ -3,7 +3,14 @@ const router = express.Router();
 const projectService = require('./project.service');
 // routes
 router.get('/', getLastAddProduct);
-router.get('/getLastAddProjectEntry', getLastAddProjectEntry);
+router.get('/getLastAddedProjectEntry', getLastAddedProjectEntry);
+
+//get by project entry by No
+    // 1- inProgress Boaring,2-Completed Boaring
+    //3-Cage InProgress,4-Cage Completed
+    //5-ConcretePouring In Progress
+    //6-ConcretePouring Completed
+router.get('/getAllProjectEntryInProgress', getAllProjectEntryInProgress);
 router.get('/getAllProjectHistory', getAllProjectHistory);
 router.get('/getProjectDtlById', getProjectDtlById);
 router.get('/pileNo/:pileNo', getProjectRecordingDtlByPilno);
@@ -15,6 +22,8 @@ router.post('/addProjectRecording', addProjectRecording);
 router.put('/updateProject', updateProject);
 router.put('/updateProjectHistory', updateProjectHistory);
 router.put('/updateProjectRecording', updateProjectRecording);
+router.put('/updateProjectEntry', updateProjectEntry);
+
 module.exports = router;
 
 function getProjectDtlById(req, res, next) {
@@ -33,9 +42,13 @@ function getProjectRecordingDtlByPilno(req, res, next) {
         .then(projects => res.json(projects))
         .catch(err => next(err));
 }
-
-    function getLastAddProjectEntry(req, res, next) {
-    projectService.getLastAddProjectEntry()
+function getAllProjectEntryInProgress(req, res, next) {
+    projectService.getAllProjectEntryInProgress()
+        .then(projects => res.json(projects))
+        .catch(err => next(err));
+}
+    function getLastAddedProjectEntry(req, res, next) {
+    projectService.getLastAddedProjectEntry()
         .then(projects => res.json(projects))
         .catch(err => next(err));
 }
@@ -79,6 +92,11 @@ function updateProjectHistory(req, res, next) {
 }
 function updateProjectRecording(req, res, next) {
     projectService.updateProjectRecording(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+function updateProjectEntry(req, res, next) {
+    projectService.updateProjectEntry(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
