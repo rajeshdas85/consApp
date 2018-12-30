@@ -89,7 +89,7 @@ async function getProjectRecordingDtlByPilno(pileNo) {
 
 //Recoding Ended
 async function getAllProjectHistory() {
-    return await ProjectHistory.find().sort({ $natural: 1 });
+    return await ProjectHistory.find().sort({ $natural: -1 });
 }
 async function addProject(projectParam) {
     console.log(projectParam);
