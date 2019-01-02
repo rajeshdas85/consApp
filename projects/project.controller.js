@@ -11,7 +11,7 @@ router.get('/getLastAddedProjectEntry', getLastAddedProjectEntry);
     //5-ConcretePouring In Progress
     //6-ConcretePouring Completed
 router.get('/getAllProjectEntryInProgress', getAllProjectEntryInProgress);
-router.get('/getAllProjectHistory', getAllProjectHistory);
+router.get('/getAllProjectHistory/uniqueId/:uniqueId', getAllProjectHistory);
 router.get('/getProjectDtlById', getProjectDtlById);
 router.get('/pileNo/:pileNo', getProjectRecordingDtlByPilno);
 //router.get('/:getLastAddProduct', getLastAddProduct);
@@ -53,7 +53,7 @@ function getAllProjectEntryInProgress(req, res, next) {
         .catch(err => next(err));
 }
     function getAllProjectHistory(req, res, next) {
-    projectService.getAllProjectHistory()
+    projectService.getAllProjectHistory(req.params.uniqueId)
         .then(projects => res.json(projects))
         .catch(err => next(err));
 }

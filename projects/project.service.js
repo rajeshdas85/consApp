@@ -88,8 +88,9 @@ async function getProjectRecordingDtlByPilno(pileNo) {
 
 
 //Recoding Ended
-async function getAllProjectHistory() {
-    return await ProjectHistory.find().sort({ $natural: -1 });
+async function getAllProjectHistory(uniqueId) {
+    console.log("enter");
+    return await ProjectHistory.find({ "uniqueId": uniqueId }).sort({ $natural: -1 });
 }
 async function addProject(projectParam) {
     console.log(projectParam);
@@ -103,6 +104,11 @@ async function addProject(projectParam) {
         });
 }
 async function addProjectHistory(projectParam) {
+
+     // validate
+    if (await ProjectHistory.findOne({ pileNo: projectParam.pileNo+'-'+projectParam.uniqueId })) {
+        throw 'pile No  "' + projectParam.pileNo.split('-')[0] + '" is already taken';
+    }
     const projectHistory = new ProjectHistory(projectParam);
     await projectHistory.save()
         .then((data) => {
@@ -110,6 +116,7 @@ async function addProjectHistory(projectParam) {
         })
         .catch((err) => {
             console.log(err);
+             throw 'pile No  "' + projectParam.pileNo.split('-')[0] + '" is already taken';
         });
 }
 
@@ -131,6 +138,23 @@ async function updateProject(param) {
     // var nested = JSON.stringify(param.PillingInfoByProjectID);
     //console.log(nested);
     return await Project.findOneAndUpdate({ _id: param.id },
+        {
+            $set:
+            {
+                pillingInfoByProjectID1: param.pillingInfoByProjectID1,
+                pillingInfoByProjectID2: param.pillingInfoByProjectID2,
+                otherInfoByProjectID: param.otherInfoByProjectID,
+                updateDate: param.updateDate
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function updatePillingDataWithUniqueID(param) {
+    //console.log(param.updateDate);
+    // var nested = JSON.stringify(param.PillingInfoByProjectID);
+    //console.log(nested);
+    return await Project.findOneAndUpdate({ _id: param.id},
         {
             $set:
             {

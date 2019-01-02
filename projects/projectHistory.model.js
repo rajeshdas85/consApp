@@ -3,8 +3,9 @@ require('mongoose-double')(mongoose);
 const Schema = mongoose.Schema;
 const SchemaTypes = mongoose.Schema.Types;
 const schema = new Schema({
+    pileNo: { type: String, unique: true, required: true },
     projId: { type: String, required: true },
-    pileNo: { type: String, unique: true },
+    uniqueId: { type: String, required: true },
     dateOfStarting: { type: Date, default: Date.now },
     dateOfEnding: { type: Date, default: Date.now },
     pillingRigDetails: { type: String, default: "Details" },
@@ -34,4 +35,5 @@ const schema = new Schema({
 });
 
 schema.set('toJSON', { virtuals: true });
+schema.statics.findOrCreate = require("find-or-create");
 module.exports = mongoose.model('ProjectHistory', schema);
