@@ -33,6 +33,10 @@ router.put('/updateProjectHistory', updateProjectHistory);
 router.put('/updateProjectRecording', updateProjectRecording);
 router.put('/updateProjectEntry', updateProjectEntry);
 
+router.put('/updateProjectEntryCageLowering', updateProjectEntryCageLowering);
+router.put('/updateProjectEntryConcretePouring', updateProjectEntryConcretePouring);
+router.put('/updateProjectEntryFinal', updateProjectEntryFinal);
+
 module.exports = router;
 
 function getProjectDtlById(req, res, next) {
@@ -123,6 +127,24 @@ function updateProjectRecording(req, res, next) {
 }
 function updateProjectEntry(req, res, next) {
     projectService.updateProjectEntry(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function updateProjectEntryCageLowering(req, res, next) {
+    projectService.updateProjectEntryCageLowering(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function updateProjectEntryConcretePouring(req, res, next) {
+    projectService.updateProjectEntryConcretePouring(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function updateProjectEntryFinal(req, res, next) {
+    projectService.updateProjectEntryFinal(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

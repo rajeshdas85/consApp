@@ -13,6 +13,9 @@ module.exports = {
     addProjectHistory,
     addProjectEntry,
     updateProjectEntry,
+    updateProjectEntryCageLowering,
+    updateProjectEntryConcretePouring,
+    updateProjectEntryFinal,
     addProjectRecording,
     updateProject,
     updateProjectHistory,
@@ -66,14 +69,49 @@ async function addProjectEntry(projectParam) {
         });
 }
 async function updateProjectEntry(param) {
-    return await projectEntry.update({ pileNo: param.pileNo },
+    return await ProjectEntry.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                statusOfPilling: param.statusOfPilling,
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function updateProjectEntryCageLowering(param) {
+    return await ProjectEntry.update({ pileNo: param.pileNo },
         {
             $set:
             {
                 cageloweringStartTime: param.cageloweringStartTime,
                 cageloweringEndTime: param.cageloweringEndTime,
+                statusOfPilling: param.statusOfPilling,
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function updateProjectEntryConcretePouring(param) {
+    return await ProjectEntry.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+            
                 concretePouringStartTime: param.concretePouringStartTime,
                 concretePouringEndTime: param.concretePouringEndTime,
+                statusOfPilling: param.statusOfPilling,
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function updateProjectEntryFinal(param) {
+    return await ProjectEntry.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+        
                 noOfTrimePiecesUsed: param.noOfTrimePiecesUsed,
                 noOfManPower: param.noOfManPower,
                 noOfManPowerContractor: param.noOfManPowerContractor,
@@ -83,6 +121,7 @@ async function updateProjectEntry(param) {
 
         }, { multi: true, new: true });
 }
+
 // Ended  ProjectEntry
 
 //Recoding started
