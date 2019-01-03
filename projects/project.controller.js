@@ -16,11 +16,11 @@ router.get('/getProjectDtlById', getProjectDtlById);
 
 
 router.get('/getAllProjects', getAllProjects);
-//Example : http://localhost:8080/projects/getAllProjects
+//Example : https://rkec.herokuapp.com/projects/getAllProjects
 router.get('/projId/:projId', getPillingDetailsByProjId);
-//Example : http://localhost:8080/projects/projId/5c2d9e3c3682fc4ae09e20ae
+//Example : https://rkec.herokuapp.com/projects/projId/5c2d9e3c3682fc4ae09e20ae
 router.get('/getProjectHistoryDtlByPileId/pileNo/:pileNo', getProjectHistoryDtlByPileId);
-//Example : http://localhost:8080/projects/getProjectHistoryDtlByPileId/pileNo/PP-8f700aef-2ec9-85ae-0745-d4c71330bfc2
+//Example : https://rkec.herokuapp.com/projects/getProjectHistoryDtlByPileId/pileNo/PP-8f700aef-2ec9-85ae-0745-d4c71330bfc2
 
 router.get('/pileNo/:pileNo', getProjectRecordingDtlByPilno);
 //router.get('/:getLastAddProduct', getLastAddProduct);
