@@ -72,6 +72,13 @@ async function updateProjectEntry(param) {
             {
                 cageloweringStartTime: param.cageloweringStartTime,
                 cageloweringEndTime: param.cageloweringEndTime,
+                concretePouringStartTime: param.concretePouringStartTime,
+                concretePouringEndTime: param.concretePouringEndTime,
+                noOfTrimePiecesUsed: param.noOfTrimePiecesUsed,
+                noOfManPower: param.noOfManPower,
+                noOfManPowerContractor: param.noOfManPowerContractor,
+                noOfShifts: param.noOfShifts,
+                statusOfPilling: param.statusOfPilling,
             }
 
         }, { multi: true, new: true });
@@ -100,7 +107,7 @@ async function getPillingDetailsByProjId(projId) {
 }
 
 async function getProjectHistoryDtlByPileId(pileNo) {
-    console.log('Enter'+pileNo);
+    console.log('Enter' + pileNo);
     return await ProjectHistory.find({ "pileNo": pileNo }).sort({ $natural: -1 });
 }
 
@@ -126,8 +133,8 @@ async function addProject(projectParam) {
 }
 async function addProjectHistory(projectParam) {
 
-     // validate
-    if (await ProjectHistory.findOne({ pileNo: projectParam.pileNo+'-'+projectParam.uniqueId })) {
+    // validate
+    if (await ProjectHistory.findOne({ pileNo: projectParam.pileNo + '-' + projectParam.uniqueId })) {
         throw 'pile No  "' + projectParam.pileNo.split('-')[0] + '" is already taken';
     }
     const projectHistory = new ProjectHistory(projectParam);
@@ -137,7 +144,7 @@ async function addProjectHistory(projectParam) {
         })
         .catch((err) => {
             console.log(err);
-             throw 'pile No  "' + projectParam.pileNo.split('-')[0] + '" is already taken';
+            throw 'pile No  "' + projectParam.pileNo.split('-')[0] + '" is already taken';
         });
 }
 
@@ -175,7 +182,7 @@ async function updatePillingDataWithUniqueID(param) {
     //console.log(param.updateDate);
     // var nested = JSON.stringify(param.PillingInfoByProjectID);
     //console.log(nested);
-    return await Project.findOneAndUpdate({ _id: param.id},
+    return await Project.findOneAndUpdate({ _id: param.id },
         {
             $set:
             {
@@ -192,7 +199,12 @@ async function updateProjectHistory(param) {
         {
             $set:
             {
-                pillingRigDetails: param.pillingRigDetails
+                pillingRigDetails: param.pillingRigDetails,
+                dateOfStarting: param.dateOfStarting,
+                //dateOfEnding: param.dateOfEnding,
+                casingToplevel: param.casingToplevel,
+                existingToplevel: param.existingToplevel,
+                nameOfSiteEngg: param.nameOfSiteEngg
             }
 
         }, { multi: true, new: true });
