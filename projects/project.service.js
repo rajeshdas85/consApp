@@ -28,7 +28,8 @@ module.exports = {
     getAllProjectEntryInProgress,
     getAllProjects,
     getPillingDetailsByProjId,
-    getProjectHistoryDtlByPileId
+    getProjectHistoryDtlByPileId,
+    getAllAddedProjectEntry
 };
 
 async function getProjectDtlById(id) {
@@ -40,6 +41,10 @@ async function getAllProjects() {
     return await Project.find().sort({ $natural: -1 });
 }
 
+//All records in Project Entry
+async function getAllAddedProjectEntry() {
+    return await ProjectEntry.find().sort({ $natural: -1 });
+}
 
 async function getLastAddProduct() {
     return await Project.find().sort({ $natural: -1 });

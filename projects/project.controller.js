@@ -4,7 +4,7 @@ const projectService = require('./project.service');
 // routes
 router.get('/', getLastAddProduct);
 router.get('/getLastAddedProjectEntry', getLastAddedProjectEntry);
-
+router.get('/getAllAddedProjectEntry', getAllAddedProjectEntry);
 //get by project entry by No
     // 1- inProgress Boaring,2-Completed Boaring
     //3-Cage InProgress,4-Cage Completed
@@ -146,5 +146,10 @@ function updateProjectEntryConcretePouring(req, res, next) {
 function updateProjectEntryFinal(req, res, next) {
     projectService.updateProjectEntryFinal(req.body)
         .then(() => res.json({}))
+        .catch(err => next(err));
+}
+function getAllAddedProjectEntry(req, res, next) {
+    projectService.getAllAddedProjectEntry()
+        .then(projects => res.json(projects))
         .catch(err => next(err));
 }
