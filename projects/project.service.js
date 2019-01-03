@@ -22,12 +22,21 @@ module.exports = {
     getLastAddedProjectEntry,
     getProjectRecordingDtlByPilno,
     getAllProjectHistory,
-    getAllProjectEntryInProgress
+    getAllProjectEntryInProgress,
+    getAllProjects,
+    getPillingDetailsByProjId,
+    getProjectHistoryDtlByPileId
 };
 
 async function getProjectDtlById(id) {
     return await Project.find({ "id": id }).sort({ $natural: -1 }).limit(1);
 }
+
+//display Project Name  and Poject Id in Dropdownlist 
+async function getAllProjects() {
+    return await Project.find().sort({ $natural: -1 });
+}
+
 
 async function getLastAddProduct() {
     return await Project.find().sort({ $natural: -1 });
@@ -85,6 +94,18 @@ async function addProjectRecording(projectParam) {
 async function getProjectRecordingDtlByPilno(pileNo) {
     return await ProjectRecording.find({ "pileNo": pileNo }).sort({ $natural: -1 }).limit(1);
 }
+
+async function getPillingDetailsByProjId(projId) {
+    return await ProjectHistory.find({ "projId": projId }).sort({ $natural: -1 });
+}
+
+async function getProjectHistoryDtlByPileId(pileNo) {
+    console.log('Enter'+pileNo);
+    return await ProjectHistory.find({ "pileNo": pileNo }).sort({ $natural: -1 });
+}
+
+
+
 
 
 //Recoding Ended

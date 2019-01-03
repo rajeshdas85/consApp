@@ -13,6 +13,15 @@ router.get('/getLastAddedProjectEntry', getLastAddedProjectEntry);
 router.get('/getAllProjectEntryInProgress', getAllProjectEntryInProgress);
 router.get('/getAllProjectHistory/uniqueId/:uniqueId', getAllProjectHistory);
 router.get('/getProjectDtlById', getProjectDtlById);
+
+
+router.get('/getAllProjects', getAllProjects);
+//Example : http://localhost:8080/projects/getAllProjects
+router.get('/projId/:projId', getPillingDetailsByProjId);
+//Example : http://localhost:8080/projects/projId/5c2d9e3c3682fc4ae09e20ae
+router.get('/getProjectHistoryDtlByPileId/pileNo/:pileNo', getProjectHistoryDtlByPileId);
+//Example : http://localhost:8080/projects/getProjectHistoryDtlByPileId/pileNo/PP-8f700aef-2ec9-85ae-0745-d4c71330bfc2
+
 router.get('/pileNo/:pileNo', getProjectRecordingDtlByPilno);
 //router.get('/:getLastAddProduct', getLastAddProduct);
 router.post('/addProject', addProject);
@@ -32,8 +41,20 @@ function getProjectDtlById(req, res, next) {
         .catch(err => next(err));
 }
 
+function getProjectHistoryDtlByPileId(req, res, next) {
+    projectService.getProjectHistoryDtlByPileId(req.params.pileNo)
+        .then(project => project ? res.json(project) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+
 function getProjectRecordingDtlByPilno(req, res, next) {
-    projectService.getProjectRecordingDtlByPilno(req.params.pileNo)
+    projectService.getProjectRecordingDtlByPilno(req.params.projId)
+        .then(project => project ? res.json(project) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+
+function getPillingDetailsByProjId(req, res, next) {
+    projectService.getPillingDetailsByProjId(req.params.projId)
         .then(project => project ? res.json(project) : res.sendStatus(404))
         .catch(err => next(err));
 }
@@ -58,6 +79,11 @@ function getAllProjectEntryInProgress(req, res, next) {
         .catch(err => next(err));
 }
 
+    function getAllProjects(req, res, next) {
+    projectService.getAllProjects()
+        .then(projects => res.json(projects))
+        .catch(err => next(err));
+}
 
 
 function addProject(req, res, next) {
