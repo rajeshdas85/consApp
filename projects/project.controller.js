@@ -11,6 +11,10 @@ router.get('/getAllAddedProjectEntry', getAllAddedProjectEntry);
     //5-ConcretePouring In Progress
     //6-ConcretePouring Completed
 router.get('/getAllProjectEntryInProgress', getAllProjectEntryInProgress);
+
+//Updated Now Dt 01/04/2019 3:12Pm
+router.get('/getAllProjectHistoryBoringIncomplete', getAllProjectHistoryBoringIncomplete);
+//end Now
 router.get('/getAllProjectHistory/uniqueId/:uniqueId', getAllProjectHistory);
 router.get('/getProjectDtlById', getProjectDtlById);
 
@@ -29,7 +33,10 @@ router.post('/addProjectHistory', addProjectHistory);
 router.post('/addProjectEntry', addProjectEntry);
 router.post('/addProjectRecording', addProjectRecording);
 router.put('/updateProject', updateProject);
+//Updated Now Dt 01/04/2019 3:11Pm
 router.put('/updateProjectHistory', updateProjectHistory);
+router.put('/updateProjectHistoryUsingEndBoringtime', updateProjectHistoryUsingEndBoringtime);
+//End Now 
 router.put('/updateProjectRecording', updateProjectRecording);
 router.put('/updateProjectEntry', updateProjectEntry);
 
@@ -72,6 +79,13 @@ function getAllProjectEntryInProgress(req, res, next) {
         .then(projects => res.json(projects))
         .catch(err => next(err));
 }
+
+function getAllProjectHistoryBoringIncomplete(req, res, next) {
+    projectService.getAllProjectHistoryBoringIncomplete()
+        .then(projects => res.json(projects))
+        .catch(err => next(err));
+}
+
     function getLastAddedProjectEntry(req, res, next) {
     projectService.getLastAddedProjectEntry()
         .then(projects => res.json(projects))
@@ -117,6 +131,11 @@ function updateProject(req, res, next) {
 }
 function updateProjectHistory(req, res, next) {
     projectService.updateProjectHistory(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+    function updateProjectHistoryUsingEndBoringtime(req, res, next) {
+    projectService.updateProjectHistoryUsingEndBoringtime(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

@@ -29,7 +29,9 @@ module.exports = {
     getAllProjects,
     getPillingDetailsByProjId,
     getProjectHistoryDtlByPileId,
-    getAllAddedProjectEntry
+    getAllAddedProjectEntry,
+    updateProjectHistoryUsingEndBoringtime,
+    getAllProjectHistoryBoringIncomplete
 };
 
 async function getProjectDtlById(id) {
@@ -63,6 +65,12 @@ async function getAllProjectEntryInProgress() {
     return await ProjectEntry.find({ "statusOfPilling": { $ne: 6 } }).sort({ $natural: -1 });
 }
 //Project Entry
+
+
+async function getAllProjectHistoryBoringIncomplete() {
+    return await ProjectHistory.find({ "depthOfBore": { $gt: 0 } }).sort({ $natural: -1 });
+}
+
 async function addProjectEntry(projectParam) {
     const projectEntry = new ProjectEntry(projectParam);
     await projectEntry.save()
@@ -161,7 +169,6 @@ async function getProjectHistoryDtlByPileId(pileNo) {
 
 //Recoding Ended
 async function getAllProjectHistory(uniqueId) {
-    console.log("enter");
     return await ProjectHistory.find({ "uniqueId": uniqueId }).sort({ $natural: -1 });
 }
 async function addProject(projectParam) {
@@ -248,7 +255,20 @@ async function updateProjectHistory(param) {
                 //dateOfEnding: param.dateOfEnding,
                 casingToplevel: param.casingToplevel,
                 existingToplevel: param.existingToplevel,
+                boringStartTime:param.boringStartTime,
                 nameOfSiteEngg: param.nameOfSiteEngg
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function updateProjectHistoryUsingEndBoringtime(param) {
+    return await ProjectHistory.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                boringEndTime: param.boringEndTime,
+                depthOfBore: param.depthOfBore
             }
 
         }, { multi: true, new: true });

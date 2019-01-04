@@ -23,6 +23,7 @@ const schema = new Schema({
     cageLengthRequired: { type: SchemaTypes.Double, default: 0 },
     boringStartTime: { type: String , default: "00:00" },
     boringEndTime: { type: String, default: "00:00"  },
+    depthOfBore: { type: SchemaTypes.Double, default: 0 },
     totalBoringTime: { type: String , default: "00:00" },
     cageLoweringStartTime: { type: String , default: "00:00" },
     cageLoweringEndTime: { type: String, default: "00:00"  },
