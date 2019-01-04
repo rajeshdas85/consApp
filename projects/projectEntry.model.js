@@ -16,8 +16,12 @@ const schema = new Schema({
     //  boringStopTime: {  type: String, default: "00:00"},
     cageloweringStartTime: { type: String, default: "00:00" },
     cageloweringEndTime: { type: String, default: "00:00" },
+    cageloweringQty: { type: Number, default: 0 },
+
     concretePouringStartTime: { type: String, default: "00:00" },
     concretePouringEndTime: { type: String, default: "00:00" },
+    concretePouringQty: { type: Number, default: 0 },
+
     noOfTrimePiecesRequired: { type: Number, default: 0 },
     noOfTrimePiecesUsed: { type: Number, default: 0 },
 

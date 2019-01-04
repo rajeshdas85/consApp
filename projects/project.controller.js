@@ -44,6 +44,10 @@ router.put('/updateProjectEntryCageLowering', updateProjectEntryCageLowering);
 router.put('/updateProjectEntryConcretePouring', updateProjectEntryConcretePouring);
 router.put('/updateProjectEntryFinal', updateProjectEntryFinal);
 
+//harish
+router.put('/cageLoweringQtyUpdate', cageLoweringQtyUpdate);
+router.put('/concretePouringQtyUpdate', concretePouringQtyUpdate);
+
 module.exports = router;
 
 function getProjectDtlById(req, res, next) {
@@ -152,6 +156,18 @@ function updateProjectEntry(req, res, next) {
 
 function updateProjectEntryCageLowering(req, res, next) {
     projectService.updateProjectEntryCageLowering(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function cageLoweringQtyUpdate(req, res, next) {
+    projectService.cageLoweringQtyUpdate(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function concretePouringQtyUpdate(req, res, next) {
+    projectService.concretePouringQtyUpdate(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

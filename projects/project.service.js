@@ -31,6 +31,10 @@ module.exports = {
     getProjectHistoryDtlByPileId,
     getAllAddedProjectEntry,
     updateProjectHistoryUsingEndBoringtime,
+
+    cageLoweringQtyUpdate,
+    concretePouringQtyUpdate,
+
     getAllProjectHistoryBoringComplete
 };
 
@@ -99,6 +103,7 @@ async function updateProjectEntryCageLowering(param) {
             {
                 cageloweringStartTime: param.cageloweringStartTime,
                 cageloweringEndTime: param.cageloweringEndTime,
+                cageloweringQty: param.cageloweringQty,
                 statusOfPilling: param.statusOfPilling,
             }
 
@@ -113,6 +118,31 @@ async function updateProjectEntryConcretePouring(param) {
             
                 concretePouringStartTime: param.concretePouringStartTime,
                 concretePouringEndTime: param.concretePouringEndTime,
+                concretePouringQty: param.concretePouringQty,
+                statusOfPilling: param.statusOfPilling,
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function cageLoweringQtyUpdate(param) {
+    return await ProjectEntry.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                cageloweringQty: param.cageloweringQty,
+                statusOfPilling: param.statusOfPilling,
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function concretePouringQtyUpdate(param) {
+    return await ProjectEntry.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                concretePouringQty: param.concretePouringQty,
                 statusOfPilling: param.statusOfPilling,
             }
 
