@@ -13,7 +13,7 @@ router.get('/getAllAddedProjectEntry', getAllAddedProjectEntry);
 router.get('/getAllProjectEntryInProgress', getAllProjectEntryInProgress);
 
 //Updated Now Dt 01/04/2019 3:12Pm
-router.get('/getAllProjectHistoryBoringIncomplete', getAllProjectHistoryBoringIncomplete);
+router.get('/getAllProjectHistoryBoringComplete', getAllProjectHistoryBoringComplete);
 //end Now
 router.get('/getAllProjectHistory/uniqueId/:uniqueId', getAllProjectHistory);
 router.get('/getProjectDtlById', getProjectDtlById);
@@ -80,8 +80,8 @@ function getAllProjectEntryInProgress(req, res, next) {
         .catch(err => next(err));
 }
 
-function getAllProjectHistoryBoringIncomplete(req, res, next) {
-    projectService.getAllProjectHistoryBoringIncomplete()
+function getAllProjectHistoryBoringComplete(req, res, next) {
+    projectService.getAllProjectHistoryBoringComplete()
         .then(projects => res.json(projects))
         .catch(err => next(err));
 }

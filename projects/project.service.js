@@ -31,7 +31,7 @@ module.exports = {
     getProjectHistoryDtlByPileId,
     getAllAddedProjectEntry,
     updateProjectHistoryUsingEndBoringtime,
-    getAllProjectHistoryBoringIncomplete
+    getAllProjectHistoryBoringComplete
 };
 
 async function getProjectDtlById(id) {
@@ -67,7 +67,7 @@ async function getAllProjectEntryInProgress() {
 //Project Entry
 
 
-async function getAllProjectHistoryBoringIncomplete() {
+async function getAllProjectHistoryBoringComplete() {
     return await ProjectHistory.find({ "depthOfBore": { $gt: 0 } }).sort({ $natural: -1 });
 }
 
