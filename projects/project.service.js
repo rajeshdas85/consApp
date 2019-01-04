@@ -143,7 +143,7 @@ async function addProjectRecording(projectParam) {
 
 
 async function getProjectRecordingDtlByPilno(pileNo) {
-    return await ProjectRecording.find({ "pileNo": pileNo }).sort({ $natural: -1 });
+    return await ProjectRecording.find({ "pileNo": pileNo }).sort({ $natural: 1 });
 }
 
 async function getPillingDetailsByProjId(projId) {
