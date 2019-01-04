@@ -52,7 +52,7 @@ function getProjectHistoryDtlByPileId(req, res, next) {
 }
 
 function getProjectRecordingDtlByPilno(req, res, next) {
-    projectService.getProjectRecordingDtlByPilno(req.params.projId)
+    projectService.getProjectRecordingDtlByPilno(req.params.pileNo)
         .then(project => project ? res.json(project) : res.sendStatus(404))
         .catch(err => next(err));
 }
