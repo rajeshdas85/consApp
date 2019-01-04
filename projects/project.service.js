@@ -147,11 +147,11 @@ async function getProjectRecordingDtlByPilno(pileNo) {
 }
 
 async function getPillingDetailsByProjId(projId) {
-    return await ProjectHistory.find({ "projId": projId }).sort({ $natural: -1 });
+    
+    return await ProjectHistory.find({$and:[{ projId: projId , casingToplevel:{ $lte: 0 } }]}).sort({ $natural: -1 });
 }
 
 async function getProjectHistoryDtlByPileId(pileNo) {
-    console.log('Enter' + pileNo);
     return await ProjectHistory.find({ "pileNo": pileNo }).sort({ $natural: -1 });
 }
 
