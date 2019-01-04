@@ -103,8 +103,7 @@ async function updateProjectEntryCageLowering(param) {
             {
                 cageloweringStartTime: param.cageloweringStartTime,
                 cageloweringEndTime: param.cageloweringEndTime,
-                cageloweringQty: param.cageloweringQty,
-                statusOfPilling: param.statusOfPilling,
+                statusOfPilling: param.statusOfPilling
             }
 
         }, { multi: true, new: true });
@@ -115,11 +114,10 @@ async function updateProjectEntryConcretePouring(param) {
         {
             $set:
             {
-            
+
                 concretePouringStartTime: param.concretePouringStartTime,
                 concretePouringEndTime: param.concretePouringEndTime,
-                concretePouringQty: param.concretePouringQty,
-                statusOfPilling: param.statusOfPilling,
+                statusOfPilling: param.statusOfPilling
             }
 
         }, { multi: true, new: true });
@@ -154,7 +152,7 @@ async function updateProjectEntryFinal(param) {
         {
             $set:
             {
-        
+
                 noOfTrimePiecesUsed: param.noOfTrimePiecesUsed,
                 noOfManPower: param.noOfManPower,
                 noOfManPowerContractor: param.noOfManPowerContractor,
@@ -185,8 +183,8 @@ async function getProjectRecordingDtlByPilno(pileNo) {
 }
 
 async function getPillingDetailsByProjId(projId) {
-    
-    return await ProjectHistory.find({$and:[{ projId: projId , casingToplevel:{ $lte: 0 } }]}).sort({ $natural: -1 });
+
+    return await ProjectHistory.find({ $and: [{ projId: projId, casingToplevel: { $lte: 0 } }] }).sort({ $natural: -1 });
 }
 
 async function getProjectHistoryDtlByPileId(pileNo) {
@@ -285,7 +283,7 @@ async function updateProjectHistory(param) {
                 //dateOfEnding: param.dateOfEnding,
                 casingToplevel: param.casingToplevel,
                 existingToplevel: param.existingToplevel,
-                boringStartTime:param.boringStartTime,
+                boringStartTime: param.boringStartTime,
                 nameOfSiteEngg: param.nameOfSiteEngg
             }
 
