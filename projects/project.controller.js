@@ -40,10 +40,18 @@ router.put('/updateProjectHistoryUsingEndBoringtime', updateProjectHistoryUsingE
 router.put('/updateProjectRecording', updateProjectRecording);
 router.put('/updateProjectEntry', updateProjectEntry);
 
+//To be done start
 router.put('/updateProjectEntryCageLowering', updateProjectEntryCageLowering);
 router.put('/updateProjectEntryConcretePouring', updateProjectEntryConcretePouring);
-router.put('/updateProjectEntryFinal', updateProjectEntryFinal);
+//Modification
 router.put('/updateProjectHistoryFinal', updateProjectHistoryFinal);
+//To be done End
+
+router.put('/updateProjectEntryFinal', updateProjectEntryFinal);
+
+
+router.put('/updateProjectHistoryconcretePourEndTime', updateProjectHistoryconcretePourEndTime);
+router.put('/updateProjectHistorycageLoweringEndTime', updateProjectHistorycageLoweringEndTime);
 //harish
 router.put('/cageLoweringQtyUpdate', cageLoweringQtyUpdate);
 router.put('/concretePouringQtyUpdate', concretePouringQtyUpdate);
@@ -188,6 +196,20 @@ function updateProjectHistoryFinal(req, res, next) {
         .then(() => res.json({}))
         .catch(err => next(err));
 }
+
+function updateProjectHistorycageLoweringEndTime(req, res, next) {
+    projectService.updateProjectHistorycageLoweringEndTime(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function updateProjectHistoryconcretePourEndTime(req, res, next) {
+    projectService.updateProjectHistoryconcretePourEndTime(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+
 function getAllAddedProjectEntry(req, res, next) {
     projectService.getAllAddedProjectEntry()
         .then(projects => res.json(projects))

@@ -32,7 +32,9 @@ module.exports = {
     getProjectHistoryDtlByPileId,
     getAllAddedProjectEntry,
     updateProjectHistoryUsingEndBoringtime,
-
+    
+    updateProjectHistorycageLoweringEndTime,
+    updateProjectHistoryconcretePourEndTime,
     cageLoweringQtyUpdate,
     concretePouringQtyUpdate,
 
@@ -169,12 +171,44 @@ async function updateProjectHistoryFinal(param) {
         {
             $set:
             {
-                dateOfEnding: param.dateOfEnding
+                dateOfEnding: param.dateOfEnding,
+                noOfTrimePiecesUsed:param.noOfTrimePiecesUsed,
+                totalNoOfShiftsWorked:param.totalNoOfShiftsWorked,
+                noOfManpowerPRC:param.noOfManpowerPRC,
+                noOfManpowerContractor:param.noOfManpowerContractor,
+
             }
 
         }, { multi: true, new: true });
 }
 
+
+
+async function updateProjectHistorycageLoweringEndTime(param) {
+    return await ProjectHistory.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                cageLoweringStartTime: param.cageLoweringStartTime,
+                cageLoweringEndTime: param.cageLoweringEndTime,
+                totalTimeForCageLowering: param.totalTimeForCageLowering,
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function updateProjectHistoryconcretePourEndTime(param) {
+    return await ProjectHistory.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                concretePourStartTime: param.concretePourStartTime,
+                concretePourEndTime: param.concretePourEndTime,
+                totalConcretePourTime: param.totalConcretePourTime,
+            }
+
+        }, { multi: true, new: true });
+}
 // Ended  ProjectEntry
 
 //Recoding started
