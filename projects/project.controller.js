@@ -43,7 +43,7 @@ router.put('/updateProjectEntry', updateProjectEntry);
 router.put('/updateProjectEntryCageLowering', updateProjectEntryCageLowering);
 router.put('/updateProjectEntryConcretePouring', updateProjectEntryConcretePouring);
 router.put('/updateProjectEntryFinal', updateProjectEntryFinal);
-
+router.put('/updateProjectHistoryFinal', updateProjectHistoryFinal);
 //harish
 router.put('/cageLoweringQtyUpdate', cageLoweringQtyUpdate);
 router.put('/concretePouringQtyUpdate', concretePouringQtyUpdate);
@@ -180,6 +180,11 @@ function updateProjectEntryConcretePouring(req, res, next) {
 
 function updateProjectEntryFinal(req, res, next) {
     projectService.updateProjectEntryFinal(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+function updateProjectHistoryFinal(req, res, next) {
+    projectService.updateProjectHistoryFinal(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

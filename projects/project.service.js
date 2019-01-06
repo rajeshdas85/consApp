@@ -16,6 +16,7 @@ module.exports = {
     updateProjectEntryCageLowering,
     updateProjectEntryConcretePouring,
     updateProjectEntryFinal,
+    updateProjectHistoryFinal,
     addProjectRecording,
     updateProject,
     updateProjectHistory,
@@ -158,6 +159,17 @@ async function updateProjectEntryFinal(param) {
                 noOfManPowerContractor: param.noOfManPowerContractor,
                 noOfShifts: param.noOfShifts,
                 statusOfPilling: param.statusOfPilling,
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function updateProjectHistoryFinal(param) {
+    return await ProjectHistory.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                dateOfEnding: param.dateOfEnding
             }
 
         }, { multi: true, new: true });
