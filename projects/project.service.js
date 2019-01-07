@@ -43,8 +43,15 @@ module.exports = {
     concretePouringQtyProjectHistoryUpdate,
     totalBoringTime,
 
+     //harish update 3
+    getPilingCutOffLevel,
+
     getAllProjectHistoryBoringComplete
 };
+
+async function getPilingCutOffLevel(pileNo) {
+    return await ProjectHistory.find({ "pileNo": pileNo }).sort({ $natural: 1 });
+}
 
 async function getProjectDtlById(id) {
     return await Project.find({ "id": id }).sort({ $natural: -1 }).limit(1);

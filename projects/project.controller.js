@@ -61,6 +61,8 @@ router.put('/cageLoweringQtyProjectHistoryUpdate', cageLoweringQtyProjectHistory
 router.put('/concretePouringQtyProjectHistoryUpdate', concretePouringQtyProjectHistoryUpdate);
 router.put('/totalBoringTime', totalBoringTime);
 
+//harish update 3
+router.get('/getPilingCutOffLevel,', getPilingCutOffLevel);
 
 module.exports = router;
 
@@ -238,5 +240,10 @@ function concretePouringQtyProjectHistoryUpdate(req, res, next) {
 function totalBoringTime(req, res, next) {
     projectService.totalBoringTime(req.body)
         .then(() => res.json({}))
+        .catch(err => next(err));
+}
+    function getPilingCutOffLevel(req, res, next) {
+    projectService.getPilingCutOffLevel(req.params.pileNo)
+        .then(project => project ? res.json(project) : res.sendStatus(404))
         .catch(err => next(err));
 }
