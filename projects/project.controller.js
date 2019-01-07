@@ -27,6 +27,9 @@ router.get('/getProjectHistoryDtlByPileId/pileNo/:pileNo', getProjectHistoryDtlB
 //Example : https://rkec.herokuapp.com/projects/getProjectHistoryDtlByPileId/pileNo/PP-8f700aef-2ec9-85ae-0745-d4c71330bfc2
 
 router.get('/pileNo/:pileNo', getProjectRecordingDtlByPilno);
+
+//harish update 3
+router.get('/getPilingCutOffLevel/:pileNo', getPilingCutOffLevel);
 //router.get('/:getLastAddProduct', getLastAddProduct);
 router.post('/addProject', addProject);
 router.post('/addProjectHistory', addProjectHistory);
@@ -61,8 +64,7 @@ router.put('/cageLoweringQtyProjectHistoryUpdate', cageLoweringQtyProjectHistory
 router.put('/concretePouringQtyProjectHistoryUpdate', concretePouringQtyProjectHistoryUpdate);
 router.put('/totalBoringTime', totalBoringTime);
 
-//harish update 3
-router.get('/getPilingCutOffLevel,', getPilingCutOffLevel);
+
 
 module.exports = router;
 
