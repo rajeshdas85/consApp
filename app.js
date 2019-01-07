@@ -48,7 +48,7 @@ app.use(cookieParser());
 //app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(cors());
+
 app.use('/projects', require('./projects/project.controller'));
 app.use('/projectmanager', require('./projectmanager/projectManager.controller'));
 // app.use('/products', require('./products/product.controller'));
@@ -60,6 +60,7 @@ app.use('/projectmanager', require('./projectmanager/projectManager.controller')
 
 app.use(express.static(path.join(__dirname, 'public')));
 // use JWT auth to secure the api nned to go up to the Controller calling
+app.use(cors());
 app.use(jwt());
 //app.use(db());
 // global error handler
