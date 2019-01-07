@@ -38,6 +38,11 @@ module.exports = {
     cageLoweringQtyUpdate,
     concretePouringQtyUpdate,
 
+      //harish update 2
+    cageLoweringQtyProjectHistoryUpdate,
+    concretePouringQtyProjectHistoryUpdate,
+    totalBoringTime,
+
     getAllProjectHistoryBoringComplete
 };
 
@@ -358,3 +363,38 @@ async function updateProjectRecording(param) {
 
         }, { multi: true, new: true });
 }
+
+async function cageLoweringQtyProjectHistoryUpdate(param) {
+    return await ProjectHistory.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                cageloweringQty: param.cageloweringQty,
+            
+            }
+
+        }, { multi: true, new: true });
+}
+ async function concretePouringQtyProjectHistoryUpdate(param) {
+    return await ProjectHistory.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                concretePouringQty: param.concretePouringQty,
+            
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function totalBoringTime(param) {
+    return await ProjectHistory.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                totalBoringTime: param.totalBoringTime,
+            
+            }
+
+        }, { multi: true, new: true });
+}   

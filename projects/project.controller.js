@@ -56,6 +56,12 @@ router.put('/updateProjectHistorycageLoweringEndTime', updateProjectHistorycageL
 router.put('/cageLoweringQtyUpdate', cageLoweringQtyUpdate);
 router.put('/concretePouringQtyUpdate', concretePouringQtyUpdate);
 
+//harish update 2
+router.put('/cageLoweringQtyProjectHistoryUpdate', cageLoweringQtyProjectHistoryUpdate);
+router.put('/concretePouringQtyProjectHistoryUpdate', concretePouringQtyProjectHistoryUpdate);
+router.put('/totalBoringTime', totalBoringTime);
+
+
 module.exports = router;
 
 function getProjectDtlById(req, res, next) {
@@ -213,5 +219,24 @@ function updateProjectHistoryconcretePourEndTime(req, res, next) {
 function getAllAddedProjectEntry(req, res, next) {
     projectService.getAllAddedProjectEntry()
         .then(projects => res.json(projects))
+        .catch(err => next(err));
+}
+
+
+function cageLoweringQtyProjectHistoryUpdate(req, res, next) {
+    projectService.cageLoweringQtyProjectHistoryUpdate(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function concretePouringQtyProjectHistoryUpdate(req, res, next) {
+    projectService.concretePouringQtyProjectHistoryUpdate(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function totalBoringTime(req, res, next) {
+    projectService.totalBoringTime(req.body)
+        .then(() => res.json({}))
         .catch(err => next(err));
 }

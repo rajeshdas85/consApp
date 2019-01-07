@@ -25,6 +25,10 @@ const schema = new Schema({
     boringEndTime: { type: String, default: "00:00"  },//D
     depthOfBore: { type: SchemaTypes.Double, default: 0 },//D
     totalBoringTime: { type: String , default: "00:00" },//boringEndTime -boringStartTime
+
+     //harish update 2
+    cageloweringQty: { type: Number, default: 0 },
+    concretePouringQty: { type: Number, default: 0 },
 //Step1
     cageLoweringStartTime: { type: String , default: "00:00" },//D
     cageLoweringEndTime: { type: String, default: "00:00"  },//D
