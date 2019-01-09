@@ -50,7 +50,7 @@ module.exports = {
 
     getAllProjectHistoryBoringComplete,
     addProjectBOM,
-    getAllAddedProjectBOM,
+    getAllAddedProjectBOMByProjectID,
     updateProjectBOM
 };
 
@@ -82,8 +82,8 @@ async function getLastAddedProjectEntry() {
     return await ProjectEntry.find().sort({ $natural: -1 }).limit(1);
 }
 
-async function getAllAddedProjectBOM() {
-    return await ProjectBOM.find().sort({ $natural: -1 });
+async function getAllAddedProjectBOMByProjectID(projId) {
+    return await ProjectBOM.find({ "projId": projId }).sort({ $natural: -1 });
 }
 
 

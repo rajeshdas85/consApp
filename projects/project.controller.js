@@ -73,7 +73,7 @@ router.get('/getPilingCutOffLevel/:pileNo', getPilingCutOffLevel);
 
 
 // Project BOM API Start
-router.get('/getAllAddedProjectBOM', getAllAddedProjectBOM);
+router.get('/getAllAddedProjectBOMByProjectID/:projId', getAllAddedProjectBOMByProjectID);
 router.post('/addProjectBOM', addProjectBOM);
 router.put('/updateProjectBOM', updateProjectBOM);
 // Project BOM API END
@@ -127,8 +127,8 @@ function getLastAddedProjectEntry(req, res, next) {
 }
 
 
-function getAllAddedProjectBOM(req, res, next) {
-    projectService.getAllAddedProjectBOM()
+function getAllAddedProjectBOMByProjectID(req, res, next) {
+    projectService.getAllAddedProjectBOMByProjectID(req.params.projId)
         .then(projectsBOM => res.json(projectsBOM))
         .catch(err => next(err));
 }
