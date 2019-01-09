@@ -6,6 +6,8 @@ const Project = db.Project;
 const ProjectHistory = db.ProjectHistory;
 const ProjectEntry = db.ProjectEntry;
 const ProjectRecording = db.ProjectRecording;
+const ProjectBOM = db.ProjectBOM;
+
 //https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34
 
 module.exports = {
@@ -32,21 +34,24 @@ module.exports = {
     getProjectHistoryDtlByPileId,
     getAllAddedProjectEntry,
     updateProjectHistoryUsingEndBoringtime,
-    
+
     updateProjectHistorycageLoweringEndTime,
     updateProjectHistoryconcretePourEndTime,
     cageLoweringQtyUpdate,
     concretePouringQtyUpdate,
 
-      //harish update 2
+    //harish update 2
     cageLoweringQtyProjectHistoryUpdate,
     concretePouringQtyProjectHistoryUpdate,
     totalBoringTime,
 
-     //harish update 3
+    //harish update 3
     getPilingCutOffLevel,
 
-    getAllProjectHistoryBoringComplete
+    getAllProjectHistoryBoringComplete,
+    addProjectBOM,
+    getAllAddedProjectBOM,
+    updateProjectBOM
 };
 
 async function getPilingCutOffLevel(pileNo) {
@@ -76,6 +81,12 @@ async function getLastAddProduct() {
 async function getLastAddedProjectEntry() {
     return await ProjectEntry.find().sort({ $natural: -1 }).limit(1);
 }
+
+async function getAllAddedProjectBOM() {
+    return await ProjectBOM.find().sort({ $natural: -1 });
+}
+
+
 // 1- inProgress Boaring,2-Completed Boaring
 //3-Cage InProgress,4-Cage Completed
 //5-ConcretePouring In Progress
@@ -184,10 +195,10 @@ async function updateProjectHistoryFinal(param) {
             $set:
             {
                 dateOfEnding: param.dateOfEnding,
-                noOfTrimePiecesUsed:param.noOfTrimePiecesUsed,
-                totalNoOfShiftsWorked:param.totalNoOfShiftsWorked,
-                noOfManpowerPRC:param.noOfManpowerPRC,
-                noOfManpowerContractor:param.noOfManpowerContractor,
+                noOfTrimePiecesUsed: param.noOfTrimePiecesUsed,
+                totalNoOfShiftsWorked: param.totalNoOfShiftsWorked,
+                noOfManpowerPRC: param.noOfManpowerPRC,
+                noOfManpowerContractor: param.noOfManpowerContractor,
 
             }
 
@@ -268,6 +279,18 @@ async function addProject(projectParam) {
             console.log(err);
         });
 }
+async function addProjectBOM(projectBOMParam) {
+    const projectBOM = new ProjectBOM(projectBOMParam);
+    await projectBOM.save()
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+
 async function addProjectHistory(projectParam) {
 
     // validate
@@ -314,6 +337,23 @@ async function updateProject(param) {
 
         }, { multi: true, new: true });
 }
+async function updateProjectBOM(param) {
+    return await ProjectBOM.findOneAndUpdate({ _id: param.id },
+        {
+            $set:
+            {
+                desc: param.desc,
+                rate: param.rate,
+                qty: param.qty,
+                amount: param.amount,
+                status: param.status,
+                updateDate: param.updateDate
+            }
+
+        }, { multi: true, new: true });
+}
+
+
 
 async function updatePillingDataWithUniqueID(param) {
     //console.log(param.updateDate);
@@ -377,18 +417,18 @@ async function cageLoweringQtyProjectHistoryUpdate(param) {
             $set:
             {
                 cageloweringQty: param.cageloweringQty,
-            
+
             }
 
         }, { multi: true, new: true });
 }
- async function concretePouringQtyProjectHistoryUpdate(param) {
+async function concretePouringQtyProjectHistoryUpdate(param) {
     return await ProjectHistory.update({ pileNo: param.pileNo },
         {
             $set:
             {
                 concretePouringQty: param.concretePouringQty,
-            
+
             }
 
         }, { multi: true, new: true });
@@ -400,7 +440,7 @@ async function totalBoringTime(param) {
             $set:
             {
                 totalBoringTime: param.totalBoringTime,
-            
+
             }
 
         }, { multi: true, new: true });

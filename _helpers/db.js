@@ -13,6 +13,7 @@ module.exports = {
     ProjectEntry: require('../projects/projectEntry.model'),
     ProjectRecording: require('../projects/projectRecording.model'),//,
     ProjectManager: require('../projectmanager/projectManager.model'),//,
+    ProjectBOM: require('../projects/ProjectBOM.model'),//,
     User: require('../users/user.model')
     
     // Product: require('../products/product.model'),
