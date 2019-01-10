@@ -51,7 +51,8 @@ module.exports = {
     getAllProjectHistoryBoringComplete,
     addProjectBOM,
     getAllAddedProjectBOMByProjectID,
-    updateProjectBOM
+    updateProjectBOM,
+    updateProjectBOMByStatus
 };
 
 async function getPilingCutOffLevel(pileNo) {
@@ -342,17 +343,28 @@ async function updateProjectBOM(param) {
         {
             $set:
             {
+                title: param.title,
                 desc: param.desc,
                 rate: param.rate,
                 qty: param.qty,
                 amount: param.amount,
-               // status: param.status,
                 updateDate: param.updateDate
             }
 
         }, { multi: true, new: true });
 }
+async function updateProjectBOMByStatus(param) {
+    return await ProjectBOM.findOneAndUpdate({ _id: param.id },
+        {
+            $set:
+            {
+                status: param.status,
+                updatedQty: param.updatedQty,
+                updateDate: param.updateDate
+            }
 
+        }, { multi: true, new: true });
+}
 
 
 async function updatePillingDataWithUniqueID(param) {
