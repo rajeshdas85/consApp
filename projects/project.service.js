@@ -346,7 +346,7 @@ async function updateProjectBOM(param) {
                 rate: param.rate,
                 qty: param.qty,
                 amount: param.amount,
-                status: param.status,
+               // status: param.status,
                 updateDate: param.updateDate
             }
 
