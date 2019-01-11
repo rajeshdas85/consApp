@@ -8,7 +8,7 @@ const schema = new Schema({
     uniqueId: { type: String, required: true },
     dateOfStarting: { type: String, default: null },
     dateOfEnding: { type: String, default: null },
-    pillingRigDetails: { type: String, default: "Details" },//D
+    pillingRigDetails: { type: String, default: null},//D
     diaOfPile: { type: Number, default: 1  },
     casingToplevel: { type: SchemaTypes.Double, default: 0 },//D
     existingToplevel: { type: SchemaTypes.Double, default: 0 },//D

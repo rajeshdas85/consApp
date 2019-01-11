@@ -52,7 +52,9 @@ module.exports = {
     addProjectBOM,
     getAllAddedProjectBOMByProjectID,
     updateProjectBOM,
-    updateProjectBOMByStatus
+    updateProjectBOMByStatus,
+    getAllProjectsSumTotal,
+    getAllProjectsCount
 };
 
 async function getPilingCutOffLevel(pileNo) {
@@ -66,6 +68,31 @@ async function getProjectDtlById(id) {
 //display Project Name  and Poject Id in Dropdownlist 
 async function getAllProjects() {
     return await Project.find().sort({ $natural: -1 });
+}
+async function getAllProjectsSumTotal() {
+    return await Project.aggregate([
+        {
+            $group: {
+                _id: null,
+                total: {
+                    $sum: "$projval"
+                },
+                average_transaction_amount: {
+                    $avg: "$projval"
+                },
+                min_transaction_amount: {
+                    $min: "$projval"
+                },
+                max_transaction_amount: {
+                    $max: "$projval"
+                }
+            }
+        }
+
+    ]);
+}
+async function getAllProjectsCount() {
+    return await Project.count({});
 }
 
 //All records in Project Entry

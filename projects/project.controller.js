@@ -7,7 +7,8 @@ router.get('/', getLastAddProduct);
 router.post('/addProject', addProject);
 router.get('/getProjectDtlById', getProjectDtlById);
 router.get('/getAllProjects', getAllProjects);
-
+router.get('/getAllProjectsSumTotal', getAllProjectsSumTotal);
+router.get('/getAllProjectsCount', getAllProjectsCount);
 //Example : https://rkec.herokuapp.com/projects/getAllProjects
 router.get('/projId/:projId', getPillingDetailsByProjId);
 router.put('/updateProject', updateProject);
@@ -148,7 +149,17 @@ function getAllProjects(req, res, next) {
         .then(projects => res.json(projects))
         .catch(err => next(err));
 }
+function getAllProjectsSumTotal(req, res, next) {
+    projectService.getAllProjectsSumTotal()
+        .then(projects => res.json(projects))
+        .catch(err => next(err));
+}
 
+function getAllProjectsCount(req, res, next) {
+    projectService.getAllProjectsCount()
+        .then(projects => res.json(projects))
+        .catch(err => next(err));
+}
 
 function addProject(req, res, next) {
     projectService.addProject(req.body)
