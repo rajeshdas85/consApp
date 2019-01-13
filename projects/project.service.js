@@ -54,7 +54,8 @@ module.exports = {
     updateProjectBOM,
     updateProjectBOMByStatus,
     getAllProjectsSumTotal,
-    getAllProjectsCount
+    getAllProjectsCount,
+    updateProjectHistoryfoundinglevel
 };
 
 async function getPilingCutOffLevel(pileNo) {
@@ -473,6 +474,19 @@ async function concretePouringQtyProjectHistoryUpdate(param) {
         }, { multi: true, new: true });
 }
 
+
+
+async function updateProjectHistoryfoundinglevel(param) {
+    return await ProjectHistory.update({ pileNo: param.pileNo },
+        {
+            $set:
+            {
+                foundinglevel: param.foundinglevel,
+
+            }
+
+        }, { multi: true, new: true });
+}
 async function totalBoringTime(param) {
     return await ProjectHistory.update({ pileNo: param.pileNo },
         {

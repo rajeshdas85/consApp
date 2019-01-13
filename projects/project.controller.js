@@ -52,6 +52,7 @@ router.put('/updateProjectHistoryconcretePourEndTime', updateProjectHistoryconcr
 router.put('/updateProjectHistorycageLoweringEndTime', updateProjectHistorycageLoweringEndTime);
 router.put('/cageLoweringQtyProjectHistoryUpdate', cageLoweringQtyProjectHistoryUpdate);
 router.put('/concretePouringQtyProjectHistoryUpdate', concretePouringQtyProjectHistoryUpdate);
+router.put('/updateProjectHistoryfoundinglevel', updateProjectHistoryfoundinglevel);
 //These 3 below api to be change 
 //1)from  totalBoringTime  to totalBoringTimeHistoryUpdate
 //2)from  cageLoweringQtyUpdate  to cageLoweringQtyHistoryUpdate
@@ -290,6 +291,11 @@ function cageLoweringQtyProjectHistoryUpdate(req, res, next) {
 
 function concretePouringQtyProjectHistoryUpdate(req, res, next) {
     projectService.concretePouringQtyProjectHistoryUpdate(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+function updateProjectHistoryfoundinglevel(req, res, next) {
+    projectService.updateProjectHistoryfoundinglevel(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
