@@ -1,6 +1,7 @@
 const config = require('config.json');
+const database = require('../config/database'); 			// load the database config
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://rkec:rkec123@ds245347.mlab.com:45347/rkec-consapp-db",
+mongoose.connect(database.remoteUrl,
 { 
     useCreateIndex: true,
     useNewUrlParser: true 
