@@ -1,7 +1,7 @@
 const config = require('config.json');
 const database = require('../config/database'); 			// load the database config
 const mongoose = require('mongoose');
-mongoose.connect(process.env.CUSTOMCONNSTR_MyConnString || database.remoteUrl,
+mongoose.connect(database.remoteUrl,
 { 
     useCreateIndex: true,
     useNewUrlParser: true 
