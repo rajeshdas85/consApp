@@ -66,6 +66,8 @@ router.put('/concretePouringQtyUpdate', concretePouringQtyUpdate);
 router.get('/pileNo/:pileNo', getProjectRecordingDtlByPilno);
 router.post('/addProjectRecording', addProjectRecording);
 router.put('/updateProjectRecording', updateProjectRecording);
+router.post('/addProjectRecordingIngInBulk', addProjectRecordingIngInBulk);
+
 // Project Recording API End
 
 
@@ -188,6 +190,12 @@ function addProjectRecording(req, res, next) {
         .then(() => res.json({}))
         .catch(err => next(err));
 }
+function addProjectRecordingIngInBulk(req, res, next) {
+    projectService.addProjectRecordingIngInBulk(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
 function updateProject(req, res, next) {
     projectService.updateProject(req.body)
         .then(() => res.json({}))

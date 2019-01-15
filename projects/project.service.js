@@ -7,6 +7,7 @@ const ProjectHistory = db.ProjectHistory;
 const ProjectEntry = db.ProjectEntry;
 const ProjectRecording = db.ProjectRecording;
 const ProjectBOM = db.ProjectBOM;
+const Test = db.Test;
 
 //https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34
 
@@ -55,7 +56,8 @@ module.exports = {
     updateProjectBOMByStatus,
     getAllProjectsSumTotal,
     getAllProjectsCount,
-    updateProjectHistoryfoundinglevel
+    updateProjectHistoryfoundinglevel,
+    addProjectRecordingIngInBulk
 };
 
 async function getPilingCutOffLevel(pileNo) {
@@ -307,6 +309,16 @@ async function addProject(projectParam) {
         .catch((err) => {
             console.log(err);
         });
+}
+
+async function addProjectRecordingIngInBulk(projectParam) {
+ await Test.collection.insertMany(projectParam, function (err, docs) {
+      if (err){ 
+          return console.error(err);
+      } else {
+       return "Multiple documents inserted to Collection";  
+      }
+    });
 }
 async function addProjectBOM(projectBOMParam) {
     const projectBOM = new ProjectBOM(projectBOMParam);

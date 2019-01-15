@@ -15,7 +15,8 @@ module.exports = {
     ProjectRecording: require('../projects/projectRecording.model'),//,
     ProjectManager: require('../projectmanager/projectManager.model'),//,
     ProjectBOM: require('../projects/ProjectBOM.model'),//,
-    User: require('../users/user.model')
+    User: require('../users/user.model'),
+    Test: require('../projects/test.model')
     
     // Product: require('../products/product.model'),
     // Category: require('../categories/category.model'),
