@@ -7,13 +7,18 @@ router.get('/', getLastAddProduct);
 router.post('/addProject', addProject);
 router.get('/getProjectDtlById', getProjectDtlById);
 router.get('/getAllProjects', getAllProjects);
+router.get('/getProjectDtlByLoginId/:ids', getProjectDtlByLoginId);
 router.get('/getAllProjectsSumTotal', getAllProjectsSumTotal);
 router.get('/getAllProjectsCount', getAllProjectsCount);
 //Example : https://rkec.herokuapp.com/projects/getAllProjects
 router.get('/projId/:projId', getPillingDetailsByProjId);
 router.put('/updateProject', updateProject);
 //Project API END
+//Project user mapping  API Start
+router.get('/getMappingProjectByempId/:empId', getMappingProjectByempId);
 
+router.post('/mapProjectUser', mapProjectUser);
+//
 
 // Project Entry API Start
 router.get('/getLastAddedProjectEntry', getLastAddedProjectEntry);
@@ -90,6 +95,26 @@ function getProjectDtlById(req, res, next) {
         .then(project => project ? res.json(project) : res.sendStatus(404))
         .catch(err => next(err));
 }
+
+function getProjectDtlByLoginId(req, res, next) {
+    projectService.getProjectDtlByLoginId(req.params.ids)
+        .then(project => project ? res.json(project) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+function getMappingProjectByempId(req, res, next) {
+    projectService.getMappingProjectByempId(req.params.empId)
+        .then(project => project ? res.json(project) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+
+
+
+
+
+
+
+
+
 
 function getProjectHistoryDtlByPileId(req, res, next) {
     projectService.getProjectHistoryDtlByPileId(req.params.pileNo)
@@ -169,6 +194,12 @@ function addProject(req, res, next) {
         .then(() => res.json({}))
         .catch(err => next(err));
 }
+function mapProjectUser(req, res, next) {
+    projectService.mapProjectUser(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
 
 function addProjectBOM(req, res, next) {
     projectService.addProjectBOM(req.body)

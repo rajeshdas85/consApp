@@ -1,7 +1,7 @@
 const config = require('config.json');
 const database = require('../config/database'); 			// load the database config
 const mongoose = require('mongoose');
-mongoose.connect(database.remoteUrl,
+mongoose.connect(database.localUrl,
 { 
     useCreateIndex: true,
     useNewUrlParser: true 
@@ -16,7 +16,8 @@ module.exports = {
     ProjectManager: require('../projectmanager/projectManager.model'),//,
     ProjectBOM: require('../projects/ProjectBOM.model'),//,
     User: require('../users/user.model'),
-    Test: require('../projects/test.model')
+    Test: require('../projects/test.model'),
+    ProjectUserMapping: require('../projects/projectusermapping.model')
     
     // Product: require('../products/product.model'),
     // Category: require('../categories/category.model'),

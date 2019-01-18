@@ -7,6 +7,8 @@ const schema = new Schema({
     lastName: { type: String, required: true },
     email: { type: String, required: true,unique: true },
     isAdmin: { type: Boolean, default: false },
+    //If 1:Admin 2:Project manager,3: SiteEngg 
+    empTypeId:{ type: Number, required: true},
     createdDate: { type: Date, default: Date.now }
 });
 

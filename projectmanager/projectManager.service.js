@@ -24,5 +24,5 @@ async function addProjectManager(projectManagerParam) {
 }
 
 async function getPMByName() {
-    return await ProjectManager.find().sort({ $natural: -1 });
+    return await ProjectManager.find().select({"firstName":1,'_id':1}).sort({ $natural: -1 });
 }

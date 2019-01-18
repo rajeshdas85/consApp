@@ -8,6 +8,7 @@ const ProjectEntry = db.ProjectEntry;
 const ProjectRecording = db.ProjectRecording;
 const ProjectBOM = db.ProjectBOM;
 const Test = db.Test;
+const ProjectUserMapping = db.ProjectUserMapping;
 
 //https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34
 
@@ -57,7 +58,10 @@ module.exports = {
     getAllProjectsSumTotal,
     getAllProjectsCount,
     updateProjectHistoryfoundinglevel,
-    addProjectRecordingIngInBulk
+    addProjectRecordingIngInBulk,
+    getProjectDtlByLoginId,
+    mapProjectUser,
+    getMappingProjectByempId
 };
 
 async function getPilingCutOffLevel(pileNo) {
@@ -65,7 +69,49 @@ async function getPilingCutOffLevel(pileNo) {
 }
 
 async function getProjectDtlById(id) {
-    return await Project.find({ "id": id }).sort({ $natural: -1 }).limit(1);
+    return await Project.find({ _id: id }).sort({ $natural: -1 }).limit(1);
+}
+
+async function getMappingProjectByempId(empId) {
+    return await ProjectUserMapping.find({ "empId": empId }).select({"projectId":1,'_id':0});
+}
+
+
+async function getProjectDtlByLoginId(projectParam) {
+ //  console.log(projectParam);
+ //https://stackoverflow.com/questions/25587729/how-can-i-pass-an-array-to-the-server-when-using-http
+//convert comma sepated string to arry using split(',')
+  var arr= projectParam.split(',');
+  // console.log(arr);
+  //Convert Array to comma sepateated String  using Join
+  //  console.log(arr.join());
+  return await  Project.find({_id: {$in: arr}});
+
+ 
+
+//    return await Project.aggregate([
+//       // {$match: { _id: {$eq:projectParam} }} ,
+//         {
+//             $group: {
+//                 _id: "$_id",  
+//                // _id: null,
+//                 total: {
+//                     $sum: "$projval"
+//                 },
+//                 average_transaction_amount: {
+//                     $avg: "$projval"
+//                 },
+//                 min_transaction_amount: {
+//                     $min: "$projval"
+//                 },
+//                 max_transaction_amount: {
+//                     $max: "$projval"
+//                 }
+//             }
+//         }
+
+//     ]);
+ 
 }
 
 //display Project Name  and Poject Id in Dropdownlist 
@@ -299,6 +345,35 @@ async function getProjectHistoryDtlByPileId(pileNo) {
 async function getAllProjectHistory(uniqueId) {
     return await ProjectHistory.find({ "uniqueId": uniqueId }).sort({ $natural: -1 });
 }
+
+
+
+async function mapProjectUser(projectUserMappingParam) {
+    console.log(projectUserMappingParam);
+    const projectUserMapping = new ProjectUserMapping(projectUserMappingParam);
+    await projectUserMapping.save()
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+
+async function addProject(projectParam) {
+    console.log(projectParam);
+    const project = new Project(projectParam);
+    await project.save()
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+
 async function addProject(projectParam) {
     console.log(projectParam);
     const project = new Project(projectParam);

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userService = require('./user.service');
 // routes
+router.get('/getAllUserByempTypeID/:No', getAllUserByempTypeID);
 router.post('/authenticate', authenticate);
 router.post('/register', register);
 module.exports = router;
@@ -13,6 +14,11 @@ function authenticate(req, res, next) {
         .catch(err => next(err));
 }
 
+function getAllUserByempTypeID(req, res, next) {
+    userService.getAllUserByempTypeID(req.params.No)
+        .then(user => user ? res.json(user) : res.sendStatus(404))
+        .catch(err => next(err));
+}
 function register(req, res, next) {
     userService.create(req.body)
         .then(() => res.json({}))

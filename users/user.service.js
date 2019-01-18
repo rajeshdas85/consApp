@@ -9,7 +9,7 @@ const User = db.User;
 module.exports = {
     create,
     authenticate,
-  
+    getAllUserByempTypeID
 };
 async function authenticate({ email, password }) {
     const user = await User.findOne({ email });
@@ -23,6 +23,9 @@ async function authenticate({ email, password }) {
     }
 }
 
+async function getAllUserByempTypeID(No) {
+    return await User.find({ "empTypeId": No });//.select("firstName");
+}
 async function create(userParam) {
         // validate
         if (await User.findOne({ email: userParam.email })) {
