@@ -9,7 +9,9 @@ const User = db.User;
 module.exports = {
     create,
     authenticate,
-    getAllUserByempTypeID
+    getAllUserByempTypeID,
+    getAllUserByName,
+    delete: _delete,
 };
 async function authenticate({ email, password }) {
     const user = await User.findOne({ email });
@@ -23,23 +25,31 @@ async function authenticate({ email, password }) {
     }
 }
 
+async function _delete(id) {
+    await User.findByIdAndRemove(id);
+}
 async function getAllUserByempTypeID(No) {
     return await User.find({ "empTypeId": No });//.select("firstName");
 }
 async function create(userParam) {
-        // validate
-        if (await User.findOne({ email: userParam.email })) {
-            throw 'email ID "' + userParam.email + '" is already taken';
-        }
+    // validate
+    if (await User.findOne({ email: userParam.email })) {
+        throw 'email ID "' + userParam.email + '" is already taken';
+    }
 
     const user = new User(userParam);
-    
+
     // hash password
     if (userParam.password) {
-       // console.log('addeded'+user);
+        // console.log('addeded'+user);
         user.hash = bcrypt.hashSync(userParam.password, 10);
     }
 
     // save user
     await user.save();
+}
+
+async function getAllUserByName() {
+    console.log("dsdf");
+    return await User.find().select({"firstName":1,'_id':1}).sort({ $natural: -1 });
 }

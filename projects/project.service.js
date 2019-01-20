@@ -49,7 +49,6 @@ module.exports = {
 
     //harish update 3
     getPilingCutOffLevel,
-
     getAllProjectHistoryBoringComplete,
     addProjectBOM,
     getAllAddedProjectBOMByProjectID,
@@ -61,7 +60,9 @@ module.exports = {
     addProjectRecordingIngInBulk,
     getProjectDtlByLoginId,
     mapProjectUser,
-    getMappingProjectByempId
+    getMappingProjectByempId,
+    getAllMappingProject,
+    deleteProjectMapping
 };
 
 async function getPilingCutOffLevel(pileNo) {
@@ -73,50 +74,50 @@ async function getProjectDtlById(id) {
 }
 
 async function getMappingProjectByempId(empId) {
-    return await ProjectUserMapping.find({ "empId": empId }).select({"projectId":1,'_id':0});
+    return await ProjectUserMapping.find({ "empId": empId }).select({ "projectId": 1, '_id': 0 });
 }
 
 
 async function getProjectDtlByLoginId(projectParam) {
- //  console.log(projectParam);
- //https://stackoverflow.com/questions/25587729/how-can-i-pass-an-array-to-the-server-when-using-http
-//convert comma sepated string to arry using split(',')
-  var arr= projectParam.split(',');
-  // console.log(arr);
-  //Convert Array to comma sepateated String  using Join
-  //  console.log(arr.join());
-  return await  Project.find({_id: {$in: arr}});
+    //  console.log(projectParam);
+    //https://stackoverflow.com/questions/25587729/how-can-i-pass-an-array-to-the-server-when-using-http
+    //convert comma sepated string to arry using split(',')
+    var arr = projectParam.split(',');
+    // console.log(arr);
+    //Convert Array to comma sepateated String  using Join
+    //  console.log(arr.join());
+    return await Project.find({ _id: { $in: arr } });
 
- 
 
-//    return await Project.aggregate([
-//       // {$match: { _id: {$eq:projectParam} }} ,
-//         {
-//             $group: {
-//                 _id: "$_id",  
-//                // _id: null,
-//                 total: {
-//                     $sum: "$projval"
-//                 },
-//                 average_transaction_amount: {
-//                     $avg: "$projval"
-//                 },
-//                 min_transaction_amount: {
-//                     $min: "$projval"
-//                 },
-//                 max_transaction_amount: {
-//                     $max: "$projval"
-//                 }
-//             }
-//         }
 
-//     ]);
- 
+    //    return await Project.aggregate([
+    //       // {$match: { _id: {$eq:projectParam} }} ,
+    //         {
+    //             $group: {
+    //                 _id: "$_id",  
+    //                // _id: null,
+    //                 total: {
+    //                     $sum: "$projval"
+    //                 },
+    //                 average_transaction_amount: {
+    //                     $avg: "$projval"
+    //                 },
+    //                 min_transaction_amount: {
+    //                     $min: "$projval"
+    //                 },
+    //                 max_transaction_amount: {
+    //                     $max: "$projval"
+    //                 }
+    //             }
+    //         }
+
+    //     ]);
+
 }
 
 //display Project Name  and Poject Id in Dropdownlist 
 async function getAllProjects() {
-    return await Project.find().sort({ $natural: -1 });
+    return await Project.find().select({ "projName": 1, '_id': 1 }).sort({ $natural: -1 });
 }
 async function getAllProjectsSumTotal() {
     return await Project.aggregate([
@@ -144,6 +145,19 @@ async function getAllProjectsCount() {
     return await Project.count({});
 }
 
+async function deleteProjectMapping(id) {
+   await ProjectUserMapping.findOneAndDelete({ "_id": id }, function (err,docs) {
+        if (err) return res.status(500).send(err);
+        const response = {
+            message: "Mapping successfully deleted"
+        };
+        return res.status(200).send(response);
+    });
+}
+
+async function getAllMappingProject() {
+    return await ProjectUserMapping.find().sort({ $natural: -1 });
+}
 //All records in Project Entry
 async function getAllAddedProjectEntry() {
     return await ProjectEntry.find().sort({ $natural: -1 });
@@ -350,14 +364,21 @@ async function getAllProjectHistory(uniqueId) {
 
 async function mapProjectUser(projectUserMappingParam) {
     console.log(projectUserMappingParam);
-    const projectUserMapping = new ProjectUserMapping(projectUserMappingParam);
-    await projectUserMapping.save()
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    // const projectUserMapping = new ProjectUserMapping(projectUserMappingParam);
+    // await projectUserMapping.save()
+    //     .then((data) => {
+    //         console.log(data);
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
+    await ProjectUserMapping.collection.insertMany(projectUserMappingParam, function (err, docs) {
+        if (err) {
+            return console.error(err);
+        } else {
+            return "Multiple documents inserted to Collection";
+        }
+    });
 }
 
 
@@ -387,12 +408,12 @@ async function addProject(projectParam) {
 }
 
 async function addProjectRecordingIngInBulk(projectParam) {
- await Test.collection.insertMany(projectParam, function (err, docs) {
-      if (err){ 
-          return console.error(err);
-      } else {
-       return "Multiple documents inserted to Collection";  
-      }
+    await Test.collection.insertMany(projectParam, function (err, docs) {
+        if (err) {
+            return console.error(err);
+        } else {
+            return "Multiple documents inserted to Collection";
+        }
     });
 }
 async function addProjectBOM(projectBOMParam) {

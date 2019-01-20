@@ -15,9 +15,11 @@ router.get('/projId/:projId', getPillingDetailsByProjId);
 router.put('/updateProject', updateProject);
 //Project API END
 //Project user mapping  API Start
+router.get('/getAllMappingProject', getAllMappingProject);
 router.get('/getMappingProjectByempId/:empId', getMappingProjectByempId);
-
 router.post('/mapProjectUser', mapProjectUser);
+router.delete('/deleteProjectMapping/id/:id', deleteProjectMapping);
+
 //
 
 // Project Entry API Start
@@ -93,6 +95,14 @@ module.exports = router;
 function getProjectDtlById(req, res, next) {
     projectService.getProjectDtlById(req.params.id)
         .then(project => project ? res.json(project) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+
+
+function deleteProjectMapping(req, res, next) {
+    // console.log("enter"+req.params.id);
+    projectService.deleteProjectMapping(req.params.id)
+        .then(() => res.json({}))
         .catch(err => next(err));
 }
 
@@ -188,6 +198,13 @@ function getAllProjectsCount(req, res, next) {
         .then(projects => res.json(projects))
         .catch(err => next(err));
 }
+function getAllMappingProject(req, res, next) {
+    projectService.getAllMappingProject()
+        .then(projects => res.json(projects))
+        .catch(err => next(err));
+}
+
+
 
 function addProject(req, res, next) {
     projectService.addProject(req.body)

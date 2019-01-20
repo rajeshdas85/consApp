@@ -2,11 +2,24 @@ const express = require('express');
 const router = express.Router();
 const userService = require('./user.service');
 // routes
+router.get('/getAllUserByName', getAllUserByName);
 router.get('/getAllUserByempTypeID/:No', getAllUserByempTypeID);
 router.post('/authenticate', authenticate);
 router.post('/register', register);
+router.delete('/:id', _delete);
 module.exports = router;
 
+function getAllUserByName(req, res, next) {
+    userService.getAllUserByName()
+        .then(projects => res.json(projects))
+        .catch(err => next(err));
+}
+
+function _delete(req, res, next) {
+    userService.delete(req.params.id)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
 
 function authenticate(req, res, next) {
     userService.authenticate(req.body)
