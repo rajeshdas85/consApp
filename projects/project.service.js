@@ -75,7 +75,31 @@ async function getProjectDtlById(id) {
 }
 
 async function getMappingProjectByempId(empId) {
+    console.log(empId);
+   // var ProjectUserMapping =[];
+    const projectUserMapping = await ProjectUserMapping.find({ "empId": empId }).select({ "projectId": 1, '_id': 0 })
+    // ProjectUserMapping = ProjectUserMapping.find({ "empId": empId }).select({ "projectId": 1, '_id': 0 });
+     
+    const  lstAllowedProject=[];
+    for (let index = 0; index < projectUserMapping.length; index++) {
+        const element = projectUserMapping[index].projectId;
+        lstAllowedProject.push(element);
+       
+        //getProjectDtlByLoginId();
+    }
+    console.log(lstAllowedProject);
+   // console.log(projectUserMapping.join());
+      //  console.log(element);
+   // getProjectDtlByLoginId(lstAllowedProject.join());
+    //console.log(projectUserMapping);
     return await ProjectUserMapping.find({ "empId": empId }).select({ "projectId": 1, '_id': 0 });
+    //var ProjectUserMapping = ProjectUserMapping.find({ "empId": empId }).select({ "projectId": 1, '_id': 0 });
+   // console.log(ProjectUserMapping);
+   // console.log("Tested");
+    // for (let index = 0; index < array.length; index++) {
+    //     const element = array[index];
+        
+    // }
 }
 
 
@@ -113,7 +137,7 @@ async function getProjectDtlByLoginId(projectParam) {
     //https://stackoverflow.com/questions/25587729/how-can-i-pass-an-array-to-the-server-when-using-http
     //convert comma sepated string to arry using split(',')
     var arr = projectParam.split(',');
-    // console.log(arr);
+    console.log(arr);
     //Convert Array to comma sepateated String  using Join
     //  console.log(arr.join());
     return await Project.find({ _id: { $in: arr } });

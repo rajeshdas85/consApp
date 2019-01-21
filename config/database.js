@@ -1,4 +1,6 @@
 module.exports = {
+
+   // https://stackoverflow.com/questions/44422694/how-would-someone-connect-their-mlab-mongodb-database-to-robomongo-when-mlab-onl
     remoteUrl : 'mongodb://rkec:rkec123@ds245347.mlab.com:45347/rkec-consapp-db',
     localUrl: 'mongodb://rkec:rkec123@ds245347.mlab.com:45347/rkec-consapp-db',
     awsAdminUrl:'mongodb://admin:95BDaXf3D6yqqUYB@SG-Consapp-17787.servers.mongodirector.com:47363,SG-Consapp-17788.servers.mongodirector.com:47363,SG-Consapp-17789.servers.mongodirector.com:47363/admin?replicaSet=RS-Consapp-0&ssl=true',
