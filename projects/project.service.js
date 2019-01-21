@@ -62,7 +62,8 @@ module.exports = {
     mapProjectUser,
     getMappingProjectByempId,
     getAllMappingProject,
-    deleteProjectMapping
+    deleteProjectMapping,
+    getProjectDtlByLoginIdWithAggregate
 };
 
 async function getPilingCutOffLevel(pileNo) {
@@ -78,6 +79,35 @@ async function getMappingProjectByempId(empId) {
 }
 
 
+
+async function getProjectDtlByLoginIdWithAggregate() {
+    //  console.log(projectParam);
+    //return await Project.find({ _id: { $in: arr } });
+       return await Project.aggregate([
+          // {$match: { _id: {$eq:projectParam} }} ,
+            {
+                $group: {
+                    _id: "$_id",  
+                   // _id: null,
+                    total: {
+                        $sum: "$projval"
+                    },
+                    average_transaction_amount: {
+                        $avg: "$projval"
+                    },
+                    min_transaction_amount: {
+                        $min: "$projval"
+                    },
+                    max_transaction_amount: {
+                        $max: "$projval"
+                    }
+                }
+            }
+
+        ]);
+
+}
+
 async function getProjectDtlByLoginId(projectParam) {
     //  console.log(projectParam);
     //https://stackoverflow.com/questions/25587729/how-can-i-pass-an-array-to-the-server-when-using-http
@@ -87,9 +117,6 @@ async function getProjectDtlByLoginId(projectParam) {
     //Convert Array to comma sepateated String  using Join
     //  console.log(arr.join());
     return await Project.find({ _id: { $in: arr } });
-
-
-
     //    return await Project.aggregate([
     //       // {$match: { _id: {$eq:projectParam} }} ,
     //         {
@@ -145,13 +172,9 @@ async function getAllProjectsCount() {
     return await Project.count({});
 }
 
-async function deleteProjectMapping(id) {
+async function deleteProjectMapping(id,res) {
    await ProjectUserMapping.findOneAndDelete({ "_id": id }, function (err,docs) {
         if (err) return res.status(500).send(err);
-        const response = {
-            message: "Mapping successfully deleted"
-        };
-        return res.status(200).send(response);
     });
 }
 
