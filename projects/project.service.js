@@ -75,31 +75,16 @@ async function getProjectDtlById(id) {
 }
 
 async function getMappingProjectByempId(empId) {
-    console.log(empId);
-   // var ProjectUserMapping =[];
     const projectUserMapping = await ProjectUserMapping.find({ "empId": empId }).select({ "projectId": 1, '_id': 0 })
-    // ProjectUserMapping = ProjectUserMapping.find({ "empId": empId }).select({ "projectId": 1, '_id': 0 });
-     
-    const  lstAllowedProject=[];
+    // return await ProjectUserMapping.find({ "empId": empId }).select({ "projectId": 1, '_id': 0 });
+    const lstAllowedProject = [];
     for (let index = 0; index < projectUserMapping.length; index++) {
-        const element = projectUserMapping[index].projectId;
-        lstAllowedProject.push(element);
-       
-        //getProjectDtlByLoginId();
+        var element = JSON.stringify(projectUserMapping[index]);
+        var stringify = JSON.parse(element);
+        lstAllowedProject.push(stringify['projectId']);
     }
-    console.log(lstAllowedProject);
-   // console.log(projectUserMapping.join());
-      //  console.log(element);
-   // getProjectDtlByLoginId(lstAllowedProject.join());
-    //console.log(projectUserMapping);
-    return await ProjectUserMapping.find({ "empId": empId }).select({ "projectId": 1, '_id': 0 });
-    //var ProjectUserMapping = ProjectUserMapping.find({ "empId": empId }).select({ "projectId": 1, '_id': 0 });
-   // console.log(ProjectUserMapping);
-   // console.log("Tested");
-    // for (let index = 0; index < array.length; index++) {
-    //     const element = array[index];
-        
-    // }
+    // console.log(lstAllowedProject);
+    return await Project.find({ _id: { $in: lstAllowedProject } });
 }
 
 
@@ -107,28 +92,28 @@ async function getMappingProjectByempId(empId) {
 async function getProjectDtlByLoginIdWithAggregate() {
     //  console.log(projectParam);
     //return await Project.find({ _id: { $in: arr } });
-       return await Project.aggregate([
-          // {$match: { _id: {$eq:projectParam} }} ,
-            {
-                $group: {
-                    _id: "$_id",  
-                   // _id: null,
-                    total: {
-                        $sum: "$projval"
-                    },
-                    average_transaction_amount: {
-                        $avg: "$projval"
-                    },
-                    min_transaction_amount: {
-                        $min: "$projval"
-                    },
-                    max_transaction_amount: {
-                        $max: "$projval"
-                    }
+    return await Project.aggregate([
+        // {$match: { _id: {$eq:projectParam} }} ,
+        {
+            $group: {
+                _id: "$_id",
+                // _id: null,
+                total: {
+                    $sum: "$projval"
+                },
+                average_transaction_amount: {
+                    $avg: "$projval"
+                },
+                min_transaction_amount: {
+                    $min: "$projval"
+                },
+                max_transaction_amount: {
+                    $max: "$projval"
                 }
             }
+        }
 
-        ]);
+    ]);
 
 }
 
@@ -196,8 +181,8 @@ async function getAllProjectsCount() {
     return await Project.count({});
 }
 
-async function deleteProjectMapping(id,res) {
-   await ProjectUserMapping.findOneAndDelete({ "_id": id }, function (err,docs) {
+async function deleteProjectMapping(id, res) {
+    await ProjectUserMapping.findOneAndDelete({ "_id": id }, function (err, docs) {
         if (err) return res.status(500).send(err);
     });
 }
