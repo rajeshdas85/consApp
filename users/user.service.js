@@ -51,5 +51,5 @@ async function create(userParam) {
 
 async function getAllUserByName() {
     console.log("dsdf");
-    return await User.find().select({"firstName":1,'_id':1}).sort({ $natural: -1 });
+    return await User.find().select({"fullName":1,'_id':1}).sort({ $natural: -1 });
 }
