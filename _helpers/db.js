@@ -1,7 +1,7 @@
 const config = require('config.json');
 const database = require('../config/database'); 			// load the database config
 const mongoose = require('mongoose');
-mongoose.connect(database.localUrl,
+mongoose.connect(database.awsAdminUrl,
 { 
     useCreateIndex: true,
     useNewUrlParser: true 
