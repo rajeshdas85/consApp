@@ -21,6 +21,8 @@ router.get('/getAllMappingProject', getAllMappingProject);
 router.get('/getMappingProjectByempId/:empId', getMappingProjectByempId);
 router.post('/mapProjectUser', mapProjectUser);
 router.delete('/deleteProjectMapping/id/:id', deleteProjectMapping);
+//http://localhost:8080/projects/getMappingStaffDtlsByProject/5c485a0824e41b00173b8e96
+router.get('/getMappingStaffDtlsByProject/:projectId', getMappingStaffDtlsByProject);
 
 //
 
@@ -122,6 +124,11 @@ function getProjectDtlByLoginIdWithAggregate(req, res, next) {
     
 function getMappingProjectByempId(req, res, next) {
     projectService.getMappingProjectByempId(req.params.empId)
+        .then(project => project ? res.json(project) : res.sendStatus(404))
+        .catch(err => next(err));
+}
+function getMappingStaffDtlsByProject(req, res, next) {
+    projectService.getMappingStaffDtlsByProject(req.params.projectId)
         .then(project => project ? res.json(project) : res.sendStatus(404))
         .catch(err => next(err));
 }

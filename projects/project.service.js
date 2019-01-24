@@ -9,6 +9,7 @@ const ProjectRecording = db.ProjectRecording;
 const ProjectBOM = db.ProjectBOM;
 const Test = db.Test;
 const ProjectUserMapping = db.ProjectUserMapping;
+const User = db.User;
 
 //https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34
 
@@ -63,7 +64,8 @@ module.exports = {
     getMappingProjectByempId,
     getAllMappingProject,
     deleteProjectMapping,
-    getProjectDtlByLoginIdWithAggregate
+    getProjectDtlByLoginIdWithAggregate,
+    getMappingStaffDtlsByProject
 };
 
 async function getPilingCutOffLevel(pileNo) {
@@ -87,6 +89,19 @@ async function getMappingProjectByempId(empId) {
     return await Project.find({ _id: { $in: lstAllowedProject } });
 }
 
+
+async function getMappingStaffDtlsByProject(projectId) {
+    const projectUserMapping = await ProjectUserMapping.find({ "projectId": projectId}).select({ "empId": 1, '_id': 0 })
+    // const projectUserMapping = await ProjectUserMapping.find({ "projectId": projectId}).select({ "empId": 1, '_id': 0 })
+    const lstAllowedEmp = [];
+    for (let index = 0; index < projectUserMapping.length; index++) {
+        var element = JSON.stringify(projectUserMapping[index]);
+        var stringify = JSON.parse(element);
+        lstAllowedEmp.push(stringify['empId']);
+    }
+    //console.log(lstAllowedEmp);
+    return await User.find({ _id: { $in: lstAllowedEmp } ,"empTypeId":{$ne:1} });
+}
 
 
 async function getProjectDtlByLoginIdWithAggregate() {
