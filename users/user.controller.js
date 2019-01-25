@@ -5,6 +5,7 @@ const userService = require('./user.service');
 router.get('/getAllUserByName', getAllUserByName);
 router.get('/getAllUserByempTypeID/:No', getAllUserByempTypeID);
 router.post('/authenticate', authenticate);
+router.post('/sendMail', sendMail);
 router.post('/register', register);
 router.delete('/:id', _delete);
 module.exports = router;
@@ -24,6 +25,12 @@ function _delete(req, res, next) {
 function authenticate(req, res, next) {
     userService.authenticate(req.body)
         .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
+        .catch(err => next(err));
+}
+
+function sendMail(req, res, next) {
+    userService.sendMail(req.body)
+        .then(user => user ? res.json(user) : res.status(400).json({ message: 'Error in sending email' }))
         .catch(err => next(err));
 }
 
