@@ -5,7 +5,6 @@ const db = require('../_helpers/db');
 const Email = require("emailjs/email");
 const User = db.User;
 
-//https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34
 
 module.exports = {
     create,
@@ -55,32 +54,38 @@ async function getAllUserByName() {
     return await User.find().select({ "fullName": 1, '_id': 1 }).sort({ $natural: -1 });
 }
 
-
 async function sendMail(email) {
-    //email="rajesh.das85@gmail.com";
     var element = JSON.stringify(email);
     var stringify = JSON.parse(element);
     const emailID = stringify['email'];
-    console.log(emailID);
     const server = Email.server.connect({
-        user: "test@sandboxabd93e8dff7c4325a8159c941c28da2f.mailgun.org",
-        password: "rajeshdas123",
+        user: "postmaster@sandboxabd93e8dff7c4325a8159c941c28da2f.mailgun.org",
+        password: "21418b48c989d67ca72393291b4d0cae-059e099e-08d1b1d3",
         host: "smtp.mailgun.org",
         ssl: true
     });
     // console.log(server);
     // send the message and get a callback with an error or details of the message that was sent
     server.send({
-        text: "Welcome to my demo app",
-        from: "smtp.mailgun.org",
+        //  text: "Welcome to Rajeh demo app using mailgun service",
+        //from: "postmaster@sandboxabd93e8dff7c4325a8159c941c28da2f.mailgun.org",
+        from: "info@rkecprojects.com",
         to: emailID,
-        subject: "Welcome mail"
+        subject: "Welcome To RKEC User Creation Mail",
+        attachment:
+        [
+            { data: "<html><body><h2>Credentail Details</h2><p>Email: " + emailID + " <br/>Password : " + emailID + "</p></body></html>", alternative: true },
+            //   {path:"./doc/paidRec.zip", type:"application/zip", name:"paidRecrenamed.zip"}
+        ]
     }, function (err, message) {
+        // console.log(message);
         if (err)
             console.log(err);
-        // else
-        //     return res.json({ success: true, msg: 'sent' });
-    });
+        else {
+            console.log("Sucess");
+        }
+    }
+    );
 
 
 

@@ -5,6 +5,9 @@ const userService = require('./user.service');
 router.get('/getAllUserByName', getAllUserByName);
 router.get('/getAllUserByempTypeID/:No', getAllUserByempTypeID);
 router.post('/authenticate', authenticate);
+//http://tphangout.com/angular-2-sending-mails-from-your-app/
+//https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34
+//https://www.npmjs.com/package/emailjs
 router.post('/sendMail', sendMail);
 router.post('/register', register);
 router.delete('/:id', _delete);

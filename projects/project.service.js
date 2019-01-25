@@ -11,7 +11,6 @@ const Test = db.Test;
 const ProjectUserMapping = db.ProjectUserMapping;
 const User = db.User;
 
-//https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34
 
 module.exports = {
     addProject,
