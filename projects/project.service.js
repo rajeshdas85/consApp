@@ -202,7 +202,7 @@ async function deleteProjectMapping(id, res) {
 }
 
 async function getAllMappingProject() {
-    return await ProjectUserMapping.find().sort({ $natural: -1 });
+    return await ProjectUserMapping.find({ "empName": { $ne: null } }).sort({ $natural: -1 });
 }
 //All records in Project Entry
 async function getAllAddedProjectEntry() {
@@ -210,7 +210,7 @@ async function getAllAddedProjectEntry() {
 }
 
 async function getLastAddProduct() {
-    return await Project.find().sort({ $natural: -1 });
+    return await Project.find().sort({ $natural: -1 }).limit(1);
 }
 // Started  ProjectEntry
 
@@ -438,6 +438,7 @@ async function addProject(projectParam) {
         .catch((err) => {
             console.log(err);
         });
+    
 }
 
 
