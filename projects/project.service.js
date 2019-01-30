@@ -23,6 +23,7 @@ module.exports = {
     updateProjectHistoryFinal,
     addProjectRecording,
     updateProject,
+    updateProjectwithInitialVal,
     updateProjectHistory,
     updateProjectRecording,
     getProjectDtlById,
@@ -167,7 +168,8 @@ async function getProjectDtlByLoginId(projectParam) {
 
 //display Project Name  and Poject Id in Dropdownlist 
 async function getAllProjects() {
-    return await Project.find().select({ "projName": 1, '_id': 1 }).sort({ $natural: -1 });
+   // return await Project.find().select({ "projName": 1, '_id': 1 }).sort({ $natural: -1 });
+   return await Project.find().select({"location": 1,"client": 1,"completionDate": 1, "commenceDate": 1,"projval": 1,"projName": 1, "projDesc": 1 }).sort({ $natural: -1 });
 }
 async function getAllProjectsSumTotal() {
     return await Project.aggregate([
@@ -517,6 +519,26 @@ async function updateProject(param) {
                 pillingInfoByProjectID2: param.pillingInfoByProjectID2,
                 otherInfoByProjectID: param.otherInfoByProjectID,
                 updateDate: param.updateDate
+            }
+
+        }, { multi: true, new: true });
+}
+
+async function updateProjectwithInitialVal(param) {
+    //console.log(param.updateDate);
+    // var nested = JSON.stringify(param.PillingInfoByProjectID);
+    //console.log(nested);
+    return await Project.findOneAndUpdate({ _id: param.id },
+        {
+            $set:
+            {
+                projName: param.projName,
+                projDesc: param.projDesc,
+                projval: param.projval,
+                commenceDate: param.commenceDate,
+                completionDate:param.completionDate,
+                client:param.client,
+                location:param.location,
             }
 
         }, { multi: true, new: true });
