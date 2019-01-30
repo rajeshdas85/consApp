@@ -685,6 +685,10 @@ END OF TERMS AND CONDITIONS
 MIT
 MIT
 
+ng4-loading-spinner@1.2.3
+MIT
+MIT
+
 @angular/router@7.0.2
 MIT
 MIT
