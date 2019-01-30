@@ -13,6 +13,8 @@ router.get('/getAllProjectsCount', getAllProjectsCount);
 //Example : https://rkec.herokuapp.com/projects/getAllProjects
 router.get('/projId/:projId', getPillingDetailsByProjId);
 router.put('/updateProject', updateProject);
+router.put('/updateProjectwithInitialVal', updateProjectwithInitialVal);
+
 //Project API END
 //Project user mapping  API Start
 router.get('/getProjectDtlByLoginId/:ids', getProjectDtlByLoginId);
@@ -262,6 +264,11 @@ function addProjectRecordingIngInBulk(req, res, next) {
 
 function updateProject(req, res, next) {
     projectService.updateProject(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+    function updateProjectwithInitialVal(req, res, next) {
+    projectService.updateProjectwithInitialVal(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }

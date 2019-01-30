@@ -9,7 +9,7 @@ const schema = new Schema({
 
     projName: { type: String, required: true },
     projDesc: { type: String, default: "ProjectDec" },
-    projManagerId: { type: String, default: "projManagerId" },
+    //projManagerId: { type: String, default: "projManagerId" },
     
     projval: {type: SchemaTypes.Double, default: 0},
     commenceDate:{ type: Date, default: Date.now },
