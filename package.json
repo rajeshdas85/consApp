@@ -6,6 +6,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@angular/cli": "^7.3.0",
+    "@angular/compiler-cli": "^7.2.3",
     "bcrypt-nodejs": "latest",
     "bcryptjs": "^2.4.3",
     "body-parser": "~1.15.2",
@@ -35,5 +37,9 @@
     "pug": "2.0.0-beta11",
     "pug-bootstrap": "0.0.15",
     "rootpath": "^0.1.2"
+  },
+  "devDependencies": {
+    "@angular/cli": "^7.3.0",
+    "@angular/compiler-cli": "^7.2.3"
   }
 }
