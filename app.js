@@ -60,8 +60,8 @@ app.use('/users', require('./users/user.controller'));
 //require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 //app.use('/auth', auth);
 
-//app.use(express.static(path.join(__dirname, 'public','doc')));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public','doc')));
+//app.use(express.static(path.join(__dirname, 'public')));
 // use JWT auth to secure the api nned to go up to the Controller calling
 
 app.use(jwt());
