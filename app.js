@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
 //   resave: true,
 //   saveUninitialized: true
 // }));
-app.use(passport.initialize());
+//app.use(passport.initialize());
 //app.use(passport.session());
 
 // view engine setup
