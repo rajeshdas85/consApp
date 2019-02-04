@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
 
 // app.use(session({
 //   secret: 'ilovescotchscotchyscotchscotch',
-//   resave: true,
+//   resave: true,Y
 //   saveUninitialized: true
 // }));
 app.use(passport.initialize());
