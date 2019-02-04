@@ -23,11 +23,11 @@ var bodyParser   = require('body-parser');
 app.use(bodyParser.json({limit: '500mb'}));
 app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
 
-// app.use(session({
-//   secret: 'ilovescotchscotchyscotchscotch',
-//   resave: true,Y
-//   saveUninitialized: true
-// }));
+app.use(session({
+  secret: 'ilovescotchscotchyscotchscotch',
+  resave: true,
+  saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
