@@ -48,7 +48,7 @@ app.use(cookieParser());
 //app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(cors());
+//app.use(cors());
 app.use('/projects', require('./projects/project.controller'));
 app.use('/projectmanager', require('./projectmanager/projectManager.controller'));
 app.use('/users', require('./users/user.controller'));
