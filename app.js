@@ -16,20 +16,20 @@ var app = express();
 var passport = require('passport');
 var flash    = require('connect-flash');
 
-var session = require('express-session');
+//var session = require('express-session');
 var bodyParser   = require('body-parser');
 //var auth = require('./routes/auth');
 
 app.use(bodyParser.json({limit: '500mb'}));
 app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
 
-app.use(session({
-  secret: 'itisqfdlgjfdgkkkjkjkqwe',
-  resave: true,
-  saveUninitialized: true
-}));
+// app.use(session({
+//   secret: 'itisqfdlgjfdgkkkjkjkqwe',
+//   resave: true,
+//   saveUninitialized: true
+// }));
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
