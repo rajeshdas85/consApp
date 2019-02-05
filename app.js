@@ -1,4 +1,4 @@
-var createError = require('http-errors');
+//var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -69,9 +69,9 @@ app.use(jwt());
 // global error handler
 app.use(errorHandler);
 
-app.use(function(req, res, nehext) {
-  next(createError(404));
-});
+// app.use(function(req, res, nehext) {
+//   next(createError(404));
+// });
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
