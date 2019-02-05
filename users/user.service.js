@@ -8,11 +8,14 @@ const User = db.User;
 
 module.exports = {
     create,
+    updateUser,
     authenticate,
     getAllUserByempTypeID,
     getAllUserByName,
     delete: _delete,
     sendMail,
+    getAll
+
 };
 async function authenticate({ email, password }) {
     const user = await User.findOne({ email });
@@ -25,7 +28,19 @@ async function authenticate({ email, password }) {
         };
     }
 }
+async function getAll() {
+    //return await User.find().select({ "hash": 1, "firstName": 1,'_id': 1 });
+ const userData = await User.find().select({ "hash": 1, "firstName": 1,'_id': 1 });
+      const arrUser = [];
+    for (var index = 0; index < userData.length; index++) {
 
+        var element = JSON.stringify(userData[index]);
+        var stringify = JSON.parse(element);
+        arrUser.push(stringify['hash'],stringify['firstName'],stringify['_id']);
+        console.log(arrUser);
+    }
+    return arrUser;
+}
 async function _delete(id) {
     await User.findByIdAndRemove(id);
 }
@@ -48,6 +63,50 @@ async function create(userParam) {
 
     // save user
     await user.save();
+}
+
+
+async function updateUser(param) {
+    //  if (await User.findOne({ email: param.email })) {
+    //     throw 'email ID "' + param.email + '" is already taken';
+    // }
+    if(param.password){
+        return await User.findOneAndUpdate({ _id: param.id },
+        {
+            
+            $set:
+            {
+                hash: bcrypt.hashSync(param.password, 10),
+                firstName:param.firstName,
+                lastName:param.lastName,
+                fullName:param.fullName,
+              //  email:param.email,
+              //  isAdmin:param.isAdmin,
+                empTypeId:param.empTypeId,
+                phoneNo:param.phoneNo
+            }
+
+        }, { multi: true, new: true });
+    }
+    else{
+
+        return await User.findOneAndUpdate({ _id: param.id },
+        {
+            
+            $set:
+            {
+                firstName:param.firstName,
+                lastName:param.lastName,
+                fullName:param.fullName,
+              //  email:param.email,
+               // isAdmin:param.isAdmin,
+                empTypeId:param.empTypeId,
+                phoneNo:param.phoneNo
+            }
+
+        }, { multi: true, new: true });
+    }
+     
 }
 
 async function getAllUserByName() {

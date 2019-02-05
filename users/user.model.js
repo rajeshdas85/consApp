@@ -6,11 +6,12 @@ const schema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     fullName: { type: String, required: true },
-    
-    email: { type: String, required: true,unique: true },
+
+    email: { type: String, required: true, unique: true },
     isAdmin: { type: Boolean, default: false },
     //If 1:Admin 2:Project manager,3: SiteEngg 
-    empTypeId:{ type: Number, required: true},
+    empTypeId: { type: Number, required: true },
+    phoneNo: { type: Number, required: true },
     photo:{type:String, default:"Adarcard" },
     idProof:{ type: String, default:"Adarcard" } , 
     createdDate: { type: Date, default: Date.now }

@@ -5,11 +5,15 @@ const userService = require('./user.service');
 router.get('/getAllUserByName', getAllUserByName);
 router.get('/getAllUserByempTypeID/:No', getAllUserByempTypeID);
 router.post('/authenticate', authenticate);
+router.get('/', getAll);
 //http://tphangout.com/angular-2-sending-mails-from-your-app/
 //https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34
 //https://www.npmjs.com/package/emailjs
 router.post('/sendMail', sendMail);
 router.post('/register', register);
+router.put('/updateUser', updateUser);
+
+
 router.delete('/:id', _delete);
 module.exports = router;
 
@@ -24,13 +28,22 @@ function _delete(req, res, next) {
         .then(() => res.json({}))
         .catch(err => next(err));
 }
-
+function updateUser(req, res, next) {
+    userService.updateUser(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
 function authenticate(req, res, next) {
     userService.authenticate(req.body)
         .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
         .catch(err => next(err));
 }
 
+function getAll(req, res, next) {
+    userService.getAll()
+        .then(users => res.json(users))
+        .catch(err => next(err));
+}
 function sendMail(req, res, next) {
     userService.sendMail(req.body)
         .then(user => user ? res.json(user) : res.status(400).json({ message: 'Error in sending email' }))
