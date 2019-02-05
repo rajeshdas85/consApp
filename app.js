@@ -20,11 +20,11 @@ var session = require('express-session');
 var bodyParser   = require('body-parser');
 //var auth = require('./routes/auth');
 
-app.use(bodyParser.json({limit: '500mb'}));
-app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use(session({
-  secret: 'sdfsdfsdfsdfsdfsdflllll',
+  secret: 'asdasdasdasdzxcxzc',
   resave: true,
   saveUninitialized: true
 }));
@@ -49,22 +49,14 @@ app.use(cookieParser());
 
 // catch 404 and forward to error handler
 app.use(cors());
+app.use('/users', require('./users/user.controller'));
 app.use('/projects', require('./projects/project.controller'));
 app.use('/projectmanager', require('./projectmanager/projectManager.controller'));
-app.use('/users', require('./users/user.controller'));
-
-// app.use('/products', require('./products/product.controller'));
-// app.use('/categories', require('./categories/category.controller'));
-// app.use('/orderdetails', require('./orderdetails/visitingCardOrderDetails.controller'));
-// app.use('/orderdetails', require('./orderdetails/userOrderDetails.controller'));
-//require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 //app.use('/auth', auth);
 
-app.use(express.static(path.join(__dirname, 'public','doc')));
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 // use JWT auth to secure the api nned to go up to the Controller calling
-
-//app.use(jwt());
+app.use(jwt());
 //app.use(db());
 // global error handler
 app.use(errorHandler);
