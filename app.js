@@ -64,7 +64,7 @@ app.use(express.static(path.join(__dirname, 'public','doc')));
 //app.use(express.static(path.join(__dirname, 'public')));
 // use JWT auth to secure the api nned to go up to the Controller calling
 
-app.use(jwt());
+//app.use(jwt());
 //app.use(db());
 // global error handler
 app.use(errorHandler);
