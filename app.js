@@ -13,10 +13,10 @@ const errorHandler = require('./_helpers/error-handler');
 
 var app = express();
 
-var passport = require('passport');
-var flash    = require('connect-flash');
+//var passport = require('passport');
+//var flash    = require('connect-flash');
 
-var session = require('express-session');
+//var session = require('express-session');
 var bodyParser   = require('body-parser');
 //var auth = require('./routes/auth');
 
@@ -28,8 +28,8 @@ app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
 //   resave: true,
 //   saveUninitialized: true
 // }));
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
