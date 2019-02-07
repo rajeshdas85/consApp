@@ -30,16 +30,17 @@ async function authenticate({ email, password }) {
 }
 async function getAll() {
     //return await User.find().select({ "hash": 1, "firstName": 1,'_id': 1 });
- const userData = await User.find().select({ "hash": 1, "firstName": 1,'_id': 1 });
-      const arrUser = [];
-    for (var index = 0; index < userData.length; index++) {
+    return await User.find();
+//  const userData = await User.find().select({ "hash": 1, "firstName": 1,'_id': 1 });
+//       const arrUser = [];
+//     for (var index = 0; index < userData.length; index++) {
 
-        var element = JSON.stringify(userData[index]);
-        var stringify = JSON.parse(element);
-        arrUser.push(stringify['hash'],stringify['firstName'],stringify['_id']);
-        console.log(arrUser);
-    }
-    return arrUser;
+//         var element = JSON.stringify(userData[index]);
+//         var stringify = JSON.parse(element);
+//         arrUser.push(stringify['hash'],stringify['firstName'],stringify['_id']);
+//         console.log(arrUser);
+//     }
+//     return arrUser;
 }
 async function _delete(id) {
     await User.findByIdAndRemove(id);
@@ -81,7 +82,7 @@ async function updateUser(param) {
                 lastName:param.lastName,
                 fullName:param.fullName,
               //  email:param.email,
-              //  isAdmin:param.isAdmin,
+                isAdmin:param.isAdmin,
                 empTypeId:param.empTypeId,
                 phoneNo:param.phoneNo
             }
@@ -99,7 +100,7 @@ async function updateUser(param) {
                 lastName:param.lastName,
                 fullName:param.fullName,
               //  email:param.email,
-               // isAdmin:param.isAdmin,
+                isAdmin:param.isAdmin,
                 empTypeId:param.empTypeId,
                 phoneNo:param.phoneNo
             }

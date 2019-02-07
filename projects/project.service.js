@@ -100,7 +100,8 @@ async function getMappingStaffDtlsByProject(projectId) {
         lstAllowedEmp.push(stringify['empId']);
     }
     //console.log(lstAllowedEmp);
-    return await User.find({ _id: { $in: lstAllowedEmp } ,"empTypeId":{$ne:1} });
+    //return await User.find({ _id: { $in: lstAllowedEmp } ,"isAdmin":{$ne:1} });
+    return await User.find({ _id: { $in: lstAllowedEmp } ,"isAdmin":{$eq:true} });
 }
 
 
