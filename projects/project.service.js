@@ -201,7 +201,7 @@ async function getGraphData() {
             lstGraphData.push(objData);
         }
         else{
-            objData.Percentage = 500 ;
+            objData.Percentage = 0 ;
             objData.projName = projName ;
            lstGraphData.push(objData);
         }
