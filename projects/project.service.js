@@ -36,6 +36,7 @@ module.exports = {
     getPillingDetailsByProjId,
     getProjectHistoryDtlByPileId,
     getAllAddedProjectEntry,
+    getGraphData,
     updateProjectHistoryUsingEndBoringtime,
 
     updateProjectHistorycageLoweringEndTime,
@@ -87,6 +88,126 @@ async function getMappingProjectByempId(empId) {
     }
     // console.log(lstAllowedProject);
     return await Project.find({ _id: { $in: lstAllowedProject } });
+}
+
+async function getGraphData() {
+    const lstGraphData = [];
+
+    const allProjects = await Project.find();
+    //console.log(allProjects);
+    var projVal = 0 ;
+   
+    var projName = "";
+    for (let index = 0; index < allProjects.length; index++) {
+        const element = JSON.stringify(allProjects[index]);
+        var stringify = JSON.parse(element);
+
+      
+      
+      
+        var projId    = stringify['id'];
+        //console.log(projId);
+            projVal   = stringify['projval'];
+          //  console.log(projVal);
+            projName  = stringify['projName'];
+
+
+           
+            var pillingInfoByProjectID1    =  stringify['pillingInfoByProjectID1'];
+          
+           // console.log(pillingInfoByProjectID1);
+            var totalAmt = 0;
+            var totalPillingCalc = 0;
+            for (let index = 0; index < pillingInfoByProjectID1.length; index++) {
+                const element = pillingInfoByProjectID1[index];
+               //  console.log(element.amount);
+                //var stringify = JSON.parse(element);
+               // console.log(stringify);
+                 var Amount = element.amount;
+                // console.log(Amount);
+                 totalAmt = totalAmt + Amount;
+                // console.log(totalAmt);
+            }
+    
+           
+            var pillingInfoByProjectID2    = stringify['pillingInfoByProjectID2'];
+            for (let index = 0; index < pillingInfoByProjectID2.length; index++) {
+                const element = pillingInfoByProjectID2[index];
+                 var Amount = element.amount;
+                 totalAmt = totalAmt + Amount;
+                // console.log(totalAmt);
+                
+            }
+
+          //  console.log(projName);
+        const allProjectEntry = await ProjectEntry.find({ "projId": projId});
+       // console.log(allProjectEntry);
+        var noOfPileCompleted = 0;
+        var totalNoOfPileCompleted = 0;
+        for (let index = 0; index < allProjectEntry.length; index++) {
+            const element = allProjectEntry[index];
+           // console.log(element.statusOfPilling);
+          //  var stringify = JSON.parse(element.statusOfPilling);
+            //console.log(stringify);
+            var projStatusOfPilling = element.statusOfPilling;
+           
+            totalNoOfPileCompleted = totalNoOfPileCompleted + 1;
+            if(projStatusOfPilling==7){
+                noOfPileCompleted = noOfPileCompleted +1; 
+            }
+        }
+       /*  i. Piling - [{[(No. of piles completed/Total no. of piles)]*100} * Amount]
+           Eg.: Piling Status = {(3/100) * 100}% = 3%
+           Piling Status Amount = 3% * 50000000 = 1500000 */
+        totalPillingCalc = (((noOfPileCompleted / totalNoOfPileCompleted) * 100) * totalAmt);
+       // console.log(noOfPileCompleted);
+       // console.log(totalNoOfPileCompleted);
+        
+        var totalBOMSum=0;
+        const allProjectBOM = await ProjectBOM.find({ "projId": projId});
+       // console.log(allProjectBOM);
+        for (let index = 0; index < allProjectBOM.length; index++) {
+            const element = allProjectBOM[index];
+          //  console.log(element);
+          //  console.log(element.amount);
+          //  console.log(element.status);
+          //  var stringify = JSON.parse(element);
+          
+            var Amount = element.amount.value;
+            //console.log(Amount);
+            var Status = element.status.value;
+          //  console.log(Status.value);
+
+         /* ii. BOM - sum of all items (Status * Amount)
+
+          Eg.: {(7.143% * 1750000)+ (0% * 100000)} = 125002.5 */
+            totalBOMSum = totalBOMSum + (Amount * Status) ;
+            //console.log(totalBOMSum);
+        }
+
+      /*  Project Percentage on dashboard= (*(Add (i + ii))/(Contract Amount mentioned while adding a project))*100
+
+         Eg.: Percentage = {[(1500000)+(125002.5)]/5212000000} * 100 = 0.0312% */
+
+        var Percentage = ((totalPillingCalc + totalBOMSum) / projVal) * 100; 
+
+        var objData ={
+            projName:'',
+            Percentage:''
+        }
+        if(Percentage){
+            objData.Percentage = Percentage ;
+            objData.projName = projName ;
+            lstGraphData.push(objData);
+        }
+        else{
+            objData.Percentage = 500 ;
+            objData.projName = projName ;
+           lstGraphData.push(objData);
+        }
+        //console.log(lstGraphData);
+    }
+    return await lstGraphData;
 }
 
 

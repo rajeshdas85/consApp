@@ -35,7 +35,7 @@ const schema = new Schema({
     // 1- inProgress Boaring,2-Completed Boaring
     //3-Cage InProgress,4-Cage Completed
     //5-ConcretePouring In Progress
-    //6-ConcretePouring Completed
+    //6-ConcretePouring 7-Completed
     createDate: { type: Date, default: Date.now }
 });
 
