@@ -90,6 +90,8 @@ async function getMappingProjectByempId(empId) {
     return await Project.find({ _id: { $in: lstAllowedProject } });
 }
 
+
+
 async function getGraphData() {
     const lstGraphData = [];
 
@@ -118,32 +120,45 @@ async function getGraphData() {
            // console.log(pillingInfoByProjectID1);
             var totalAmt = 0;
             var totalPillingCalc = 0;
+            var P1totalNoOfPile=0;
+            var p1Id=0;
             for (let index = 0; index < pillingInfoByProjectID1.length; index++) {
                 const element = pillingInfoByProjectID1[index];
-               //  console.log(element.amount);
+                P1totalNoOfPile = element.qty;
+                p1Id=element.id;
+               // console.log(p1Id);
                 //var stringify = JSON.parse(element);
                // console.log(stringify);
-                 var Amount = element.amount;
+                // var Amount = element.amount;
                 // console.log(Amount);
-                 totalAmt = totalAmt + Amount;
+                // totalAmt = totalAmt + Amount;
                 // console.log(totalAmt);
             }
     
-           
+            var P2totalNoOfPile=0;
+            var p2Id=0;
             var pillingInfoByProjectID2    = stringify['pillingInfoByProjectID2'];
             for (let index = 0; index < pillingInfoByProjectID2.length; index++) {
                 const element = pillingInfoByProjectID2[index];
-                 var Amount = element.amount;
-                 totalAmt = totalAmt + Amount;
+                P2totalNoOfPile = element.qty;
+                p2Id=element.id;
+                // var Amount = element.amount;
+                // totalAmt = totalAmt + Amount;
                 // console.log(totalAmt);
                 
             }
-
+      //     ProjectHistory.find({ $and: [{ projId: projId, casingToplevel: { $lte: 0 } }] }).sort({ $natural: -1 });
           //  console.log(projName);
-        const allProjectEntry = await ProjectEntry.find({ "projId": projId});
+          var P1noOfPileCompleted = 0;
+        // console.log(pillingInfoByProjectID1!=null);
+          if(pillingInfoByProjectID1!=null){
+             // var id= 
+       const allProjectEntry = await ProjectEntry.find({"id":p1Id});
+
+       // const allProjectEntry = await ProjectEntry.find({$and:[{ "projId": {$eq:projId},"id":{$eq:p1Id}}]});
        // console.log(allProjectEntry);
-        var noOfPileCompleted = 0;
-        var totalNoOfPileCompleted = 0;
+       
+        //var totalNoOfPileCompleted = 0;
         for (let index = 0; index < allProjectEntry.length; index++) {
             const element = allProjectEntry[index];
            // console.log(element.statusOfPilling);
@@ -151,15 +166,66 @@ async function getGraphData() {
             //console.log(stringify);
             var projStatusOfPilling = element.statusOfPilling;
            
-            totalNoOfPileCompleted = totalNoOfPileCompleted + 1;
+            //totalNoOfPileCompleted = totalNoOfPileCompleted + 1;
             if(projStatusOfPilling==7){
-                noOfPileCompleted = noOfPileCompleted +1; 
+                P1noOfPileCompleted = P1noOfPileCompleted +1; 
             }
         }
+    }
+
+    var P2noOfPileCompleted = 0;
+    if(pillingInfoByProjectID2!=null){
+        const allProjectEntry = await ProjectEntry.find({"id":p2Id});
+      //  const allProjectEntry = await ProjectEntry.find({$and:[{ "projId": {$eq:projId},"id":{$eq:p2Id}}]});
+       // const allProjectEntry = await ProjectEntry.find({$and:[{ projId: {$eq:projId},id:{$eq:id}}]});
+        //const allProjectEntry = await ProjectEntry.find({$and:[{ projId: projId,id:id}]});
+ // console.log(allProjectEntry);
+ 
+  //var totalNoOfPileCompleted = 0;
+  for (let index = 0; index < allProjectEntry.length; index++) {
+      const element = allProjectEntry[index];
+     // console.log(element.statusOfPilling);
+    //  var stringify = JSON.parse(element.statusOfPilling);
+      //console.log(stringify);
+      var projStatusOfPilling = element.statusOfPilling;
+     
+      //totalNoOfPileCompleted = totalNoOfPileCompleted + 1;
+      if(projStatusOfPilling==7){
+        P2noOfPileCompleted = P2noOfPileCompleted +1; 
+      }
+  }
+}
+        var p1Status =0;
+      //  console.log(P1noOfPileCompleted);
+       // console.log(P1totalNoOfPile);
+         var P1 = (P1noOfPileCompleted/P1totalNoOfPile) * 100 ;
+        // console.log(P1);
+         if(P1==0||P1=== Infinity){
+            p1Status = 0;
+            //console.log(p1Status);
+         }
+         else{
+          
+            p1Status = P1;
+         }
+        //console.log(p1Status);
+
+        var p2Status = 0 ;
+        var P2 = (P2noOfPileCompleted/P2totalNoOfPile) * 100 ;
+        if(P2==0||P2 === Infinity){
+            p2Status = 0;
+          //  console.log(p2Status);
+         }
+         else{
+         
+            p2Status = P2;
+         }
+       // console.log(p2Status);
+
        /*  i. Piling - [{[(No. of piles completed/Total no. of piles)]*100} * Amount]
            Eg.: Piling Status = {(3/100) * 100}% = 3%
            Piling Status Amount = 3% * 50000000 = 1500000 */
-        totalPillingCalc = (((noOfPileCompleted / totalNoOfPileCompleted) * 100) * totalAmt);
+       // totalPillingCalc = (((noOfPileCompleted / totalNoOfPileCompleted) * 100) * totalAmt);
        // console.log(noOfPileCompleted);
        // console.log(totalNoOfPileCompleted);
         
@@ -182,20 +248,23 @@ async function getGraphData() {
 
           Eg.: {(7.143% * 1750000)+ (0% * 100000)} = 125002.5 */
             totalBOMSum = totalBOMSum + (Amount * Status) ;
-            //console.log(totalBOMSum);
+          //  console.log(totalBOMSum);
         }
 
       /*  Project Percentage on dashboard= (*(Add (i + ii))/(Contract Amount mentioned while adding a project))*100
 
          Eg.: Percentage = {[(1500000)+(125002.5)]/5212000000} * 100 = 0.0312% */
 
-        var Percentage = ((totalPillingCalc + totalBOMSum) / projVal) * 100; 
+        var Percentage = ((p1Status + p2Status + totalBOMSum) / projVal) * 100; 
+        if(Percentage==0||Percentage === Infinity){
+            Percentage=0;
+        }
 
         var objData ={
             projName:'',
             Percentage:''
         }
-        if(Percentage){
+        if(Percentage>0){
             objData.Percentage = Percentage ;
             objData.projName = projName ;
             lstGraphData.push(objData);
@@ -209,7 +278,6 @@ async function getGraphData() {
     }
     return await lstGraphData;
 }
-
 
 async function getMappingStaffDtlsByProject(projectId) {
     const projectUserMapping = await ProjectUserMapping.find({ "projectId": projectId}).select({ "empId": 1, '_id': 0 })
