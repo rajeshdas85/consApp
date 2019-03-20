@@ -94,211 +94,138 @@ async function getMappingProjectByempId(empId) {
 
 async function getGraphData() {
     const lstGraphData = [];
-
     const allProjects = await Project.find();
-    //console.log(allProjects);
-    var projVal = 0 ;
-   
+    var projVal = 0;
+
     var projName = "";
     for (let index = 0; index < allProjects.length; index++) {
         const element = JSON.stringify(allProjects[index]);
         var stringify = JSON.parse(element);
-
-      
-      
-      
-        var projId    = stringify['id'];
-        //console.log(projId);
-            projVal   = stringify['projval'];
-          //  console.log(projVal);
-            projName  = stringify['projName'];
-
-
-           
-            var pillingInfoByProjectID1    =  stringify['pillingInfoByProjectID1'];
-          
-           // console.log(pillingInfoByProjectID1);
-            var P1totalAmt = 0;
-            var totalPillingCalc = 0;
-            var P1totalNoOfPile=0;
-            var p1Id="";
-           // var pileNo ="";
-            for (let index = 0; index < pillingInfoByProjectID1.length; index++) {
-                const element = pillingInfoByProjectID1[index];
-                            // console.log(element);
-                P1totalNoOfPile = element.qty;
-                P1totalAmt = element.amount;
-               // console.log(P1totalAmt);
-                p1Id=element.id;
-              //  pileNo =element.pileNo;
-              //  console.log(pileNo);
-                //console.log(p1Id);
-                //var stringify = JSON.parse(element);
-               // console.log(stringify);
-                // var Amount = element.amount;
-                // console.log(Amount);
-                // totalAmt = totalAmt + Amount;
-                // console.log(totalAmt);
-            }
-    
-            var P2totalNoOfPile=0;
-            var p2Id="";
-              var P2totalAmt = 0;
-            var pillingInfoByProjectID2    = stringify['pillingInfoByProjectID2'];
-            for (let index = 0; index < pillingInfoByProjectID2.length; index++) {
-                const element = pillingInfoByProjectID2[index];
-                 P2totalNoOfPile = element.qty;
-                  P2totalAmt = element.amount;
-                  p2Id=element.id;
-
-                
-            }
-          var P1noOfPileCompleted = 0;
-          if(pillingInfoByProjectID1!=null){
-             // await ProjectEntry.find({"projId":projId});
-              // return await ProjectEntry.find({ $and: [{ projId: projId, pileNo: { $eq: pileNo.split('-')[1] } }] });
-       const allProjectEntry = await ProjectEntry.find({"projId":projId});
-      // console.log(allProjectEntry);
-        for (let index = 0; index < allProjectEntry.length; index++) {
-            const element = allProjectEntry[index];
-            var projStatusOfPilling = element.statusOfPilling;
-            var pileNo = element.pileNo;
-          //  console.log(pileNo);
-            var txtPileNo = "";
-            for (i = 0; i < pileNo.split("-").length; i++) {
-            if(i>0){
-             txtPileNo += pileNo.split("-")[i] + "-";
-             }
-            }
-            txtPileNo = txtPileNo.substring(0, txtPileNo.length - 1);
-         //   console.log(p1Id);
-            // console.log(txtPileNo);
-            if(p1Id == txtPileNo)
-                {
-                //console.log("Enter into the condtion");
-                if(projStatusOfPilling==7){
-                    P1noOfPileCompleted = P1noOfPileCompleted +1; 
-                   //  console.log("Status completed"+P1noOfPileCompleted);
-                }
-            }
+        var projId = stringify['id'];
+        projVal = stringify['projval'];
+        projName = stringify['projName'];
+        var pillingInfoByProjectID1 = stringify['pillingInfoByProjectID1'];
+        var P1totalAmt = 0;
+        var totalPillingCalc = 0;
+        var P1totalNoOfPile = 0;
+        var p1Id = "";
+        for (let index = 0; index < pillingInfoByProjectID1.length; index++) {
+            const element = pillingInfoByProjectID1[index];
+            P1totalNoOfPile = element.qty;
+            P1totalAmt = element.amount;
+            p1Id = element.id;
         }
-    }
 
-         var p1Status =0;
-         var P1 = (P1noOfPileCompleted/P1totalNoOfPile) * 100 ;
-         if(P1==0||P1=== Infinity||isNaN(P1)){
-            p1Status = 0;
-         }
-         else{
-            p1Status = (P1/100) * P1totalAmt;
-         }
-
-
-    var P2noOfPileCompleted = 0;
-    if(pillingInfoByProjectID2!=null){
-    
-         const allProjectEntry = await ProjectEntry.find({"projId":projId});
-    // const allProjectEntry = await ProjectEntry.find({ $and: [{ projId: projId, pileNo: { $eq: pileNo.split('-')[1] } }] });
-  for (let index = 0; index < allProjectEntry.length; index++) {
-      const element = allProjectEntry[index];
-      var projStatusOfPilling = element.statusOfPilling;
-        var pileNo = element.pileNo;
-
-         var txtPileNo = "";
-            for (i = 0; i < pileNo.split("-").length; i++) {
-            if(i>0){
-             txtPileNo += pileNo.split("-")[i] + "-";
-             }
-            }
-            txtPileNo = txtPileNo.substring(0, txtPileNo.length - 1);
-
-            if(p2Id == txtPileNo)
-                {
-                    if(projStatusOfPilling==7){
-                        P2noOfPileCompleted = P2noOfPileCompleted +1; 
+        var P2totalNoOfPile = 0;
+        var p2Id = "";
+        var P2totalAmt = 0;
+        var pillingInfoByProjectID2 = stringify['pillingInfoByProjectID2'];
+        for (let index = 0; index < pillingInfoByProjectID2.length; index++) {
+            const element = pillingInfoByProjectID2[index];
+            P2totalNoOfPile = element.qty;
+            P2totalAmt = element.amount;
+            p2Id = element.id;
+        }
+        var P1noOfPileCompleted = 0;
+        if (pillingInfoByProjectID1 != null) {
+            const allProjectEntry = await ProjectEntry.find({ "projId": projId });
+            for (let index = 0; index < allProjectEntry.length; index++) {
+                const element = allProjectEntry[index];
+                var projStatusOfPilling = element.statusOfPilling;
+                var pileNo = element.pileNo;
+                var txtPileNo = "";
+                for (i = 0; i < pileNo.split("-").length; i++) {
+                    if (i > 0) {
+                        txtPileNo += pileNo.split("-")[i] + "-";
                     }
                 }
-  }
-}
-      
+                txtPileNo = txtPileNo.substring(0, txtPileNo.length - 1);
+                if (p1Id == txtPileNo) {
+                    if (projStatusOfPilling == 7) {
+                        P1noOfPileCompleted = P1noOfPileCompleted + 1;
+                    }
+                }
+            }
+        }
 
-        var p2Status = 0 ;
-        var P2 = (P2noOfPileCompleted/P2totalNoOfPile) * 100 ;
-       // console.log(P2);
-        if(P2==0||P2 === Infinity||isNaN(P2)){
+        var p1Status = 0;
+        var P1 = (P1noOfPileCompleted / P1totalNoOfPile) * 100;
+        if (P1 == 0 || P1 === Infinity || isNaN(P1)) {
+            p1Status = 0;
+        }
+        else {
+            p1Status = (P1 / 100) * P1totalAmt;
+        }
+
+
+        var P2noOfPileCompleted = 0;
+        if (pillingInfoByProjectID2 != null) {
+
+            const allProjectEntry = await ProjectEntry.find({ "projId": projId });
+            for (let index = 0; index < allProjectEntry.length; index++) {
+                const element = allProjectEntry[index];
+                var projStatusOfPilling = element.statusOfPilling;
+                var pileNo = element.pileNo;
+
+                var txtPileNo = "";
+                for (i = 0; i < pileNo.split("-").length; i++) {
+                    if (i > 0) {
+                        txtPileNo += pileNo.split("-")[i] + "-";
+                    }
+                }
+                txtPileNo = txtPileNo.substring(0, txtPileNo.length - 1);
+
+                if (p2Id == txtPileNo) {
+                    if (projStatusOfPilling == 7) {
+                        P2noOfPileCompleted = P2noOfPileCompleted + 1;
+                    }
+                }
+            }
+        }
+
+
+        var p2Status = 0;
+        var P2 = (P2noOfPileCompleted / P2totalNoOfPile) * 100;
+        if (P2 == 0 || P2 === Infinity || isNaN(P2)) {
             p2Status = 0;
-         }
-         else{
-            p2Status = (P2/100)*P2totalAmt;
-         }
-       // console.log(p2Status);
-
-       /*  i. Piling - [{[(No. of piles completed/Total no. of piles)]*100} * Amount]
-           Eg.: Piling Status = {(3/100) * 100}% = 3%
-           Piling Status Amount = 3% * 50000000 = 1500000 */
-       // totalPillingCalc = (((noOfPileCompleted / totalNoOfPileCompleted) * 100) * totalAmt);
-       // console.log(noOfPileCompleted);
-       // console.log(totalNoOfPileCompleted);
-        
-        var totalBOMSum=0;
-        const allProjectBOM = await ProjectBOM.find({ "projId": projId});
-       // console.log(allProjectBOM);
+        }
+        else {
+            p2Status = (P2 / 100) * P2totalAmt;
+        }
+        var totalBOMSum = 0;
+        const allProjectBOM = await ProjectBOM.find({ "projId": projId });
         for (let index = 0; index < allProjectBOM.length; index++) {
             const element = allProjectBOM[index];
-          //  console.log(element);
-          //  console.log(element.amount);
-          //  console.log(element.status);
-          //  var stringify = JSON.parse(element);
-          
             var Amount = element.amount.value;
-            //console.log(Amount);
             var Status = element.status.value;
-            
-           // console.log(Amount);
-           // console.log(Status);
-          //  console.log(Status.value);
+            totalBOMSum = totalBOMSum + (Amount * (Status * (1 / 100)));
 
-         /* ii. BOM - sum of all items (Status * Amount)
-        
-          Eg.: {(7.143% * 1750000)+ (0% * 100000)} = 125002.5 */
-            totalBOMSum = totalBOMSum + (Amount * (Status*(1/100)));
-          //  console.log(totalBOMSum);
         }
-       // console.log(totalBOMSum);
-      /*  Project Percentage on dashboard= (*(Add (i + ii))/(Contract Amount mentioned while adding a project))*100
-
-         Eg.: Percentage = {[(1500000)+(125002.5)]/5212000000} * 100 = 0.0312% */
-        // console.log(index+"--"+p1Status);
-        //  console.log(index+"--"+p2Status);
-         //   console.log(index+"--"+totalBOMSum);
-                //  console.log(index+"--"+projVal);
-        var Percentage = ((p1Status + p2Status + totalBOMSum) / projVal) * 100; 
-      //  console.log(index+"--"+Percentage);
-        if(Percentage==0||Percentage === Infinity){
-            Percentage=0;
+        var Percentage = ((p1Status + p2Status + totalBOMSum) / projVal) * 100;
+        if (Percentage == 0 || Percentage === Infinity) {
+            Percentage = 0;
         }
 
-        var objData ={
-            projName:'',
-            Percentage:''
+        var objData = {
+            projName: '',
+            Percentage: ''
         }
-        if(Percentage>0){
-            objData.Percentage = Percentage.toFixed(4) ;
-            objData.projName = projName ;
+        if (Percentage > 0) {
+            objData.Percentage = Percentage.toFixed(4);
+            objData.projName = projName;
             lstGraphData.push(objData);
         }
-        else{
-            objData.Percentage = 0 ;
-            objData.projName = projName ;
-           lstGraphData.push(objData);
+        else {
+            objData.Percentage = 0;
+            objData.projName = projName;
+            lstGraphData.push(objData);
         }
-        //console.log(lstGraphData);
     }
     return await lstGraphData;
 }
 
 async function getMappingStaffDtlsByProject(projectId) {
-    const projectUserMapping = await ProjectUserMapping.find({ "projectId": projectId}).select({ "empId": 1, '_id': 0 })
+    const projectUserMapping = await ProjectUserMapping.find({ "projectId": projectId }).select({ "empId": 1, '_id': 0 })
     // const projectUserMapping = await ProjectUserMapping.find({ "projectId": projectId}).select({ "empId": 1, '_id': 0 })
     const lstAllowedEmp = [];
     for (let index = 0; index < projectUserMapping.length; index++) {
@@ -308,7 +235,7 @@ async function getMappingStaffDtlsByProject(projectId) {
     }
     //console.log(lstAllowedEmp);
     //return await User.find({ _id: { $in: lstAllowedEmp } ,"isAdmin":{$ne:1} });
-    return await User.find({ _id: { $in: lstAllowedEmp } ,"isAdmin":{$eq:true} });
+    return await User.find({ _id: { $in: lstAllowedEmp }, "isAdmin": { $eq: true } });
 }
 
 
@@ -376,8 +303,8 @@ async function getProjectDtlByLoginId(projectParam) {
 
 //display Project Name  and Poject Id in Dropdownlist 
 async function getAllProjects() {
-   // return await Project.find().select({ "projName": 1, '_id': 1 }).sort({ $natural: -1 });
-   return await Project.find().select({"location": 1,"client": 1,"completionDate": 1, "commenceDate": 1,"projval": 1,"projName": 1, "projDesc": 1 }).sort({ $natural: -1 });
+    // return await Project.find().select({ "projName": 1, '_id': 1 }).sort({ $natural: -1 });
+    return await Project.find().select({ "location": 1, "client": 1, "completionDate": 1, "commenceDate": 1, "projval": 1, "projName": 1, "projDesc": 1 }).sort({ $natural: -1 });
 }
 async function getAllProjectsSumTotal() {
     return await Project.aggregate([
@@ -648,7 +575,7 @@ async function addProject(projectParam) {
         .catch((err) => {
             console.log(err);
         });
-    
+
 }
 
 
@@ -744,9 +671,9 @@ async function updateProjectwithInitialVal(param) {
                 projDesc: param.projDesc,
                 projval: param.projval,
                 commenceDate: param.commenceDate,
-                completionDate:param.completionDate,
-                client:param.client,
-                location:param.location,
+                completionDate: param.completionDate,
+                client: param.client,
+                location: param.location,
             }
 
         }, { multi: true, new: true });
