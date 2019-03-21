@@ -198,7 +198,12 @@ async function getGraphData() {
             const element = allProjectBOM[index];
             var Amount = element.amount.value;
             var Status = element.status.value;
+            if( parseInt(Status)>=100){
+                  totalBOMSum = totalBOMSum + Amount ; 
+            }
+            else{
             totalBOMSum = totalBOMSum + (Amount * (Status * (1 / 100)));
+            }
 
         }
         var Percentage = ((p1Status + p2Status + totalBOMSum) / projVal) * 100;
